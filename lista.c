@@ -3,9 +3,11 @@
 #include "lista.h"
 
 void crear_lista(tLista * l){
-    l = malloc(sizeof(struct celda));
-    if(l==NULL)
+    *l = malloc(sizeof(struct celda));
+    if(*l==NULL)
         exit(LST_ERROR_MEMORIA);
+    (*l)->elemento=NULL;
+    (*l)->siguiente=NULL;
 }
 
 void l_insertar(tLista l, tPosicion p, tElemento e){
