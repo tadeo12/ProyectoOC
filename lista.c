@@ -45,3 +45,24 @@ void l_destruir(tLista * l, void (*fEliminar)(tElemento)){
     free(celdaActual);
     celdaActual=NULL;
 }
+
+tElemento l_recuperar(tLista l, tPosicion p){
+    if(p->siguiente==NULL)
+        exit(LST_POSICION_INVALIDA);
+    return p->siguiente->elemento;
+}
+
+tPosicion l_primera(tLista l){
+    return l;
+}
+
+tPosicion l_siguiente(tLista l, tPosicion p){
+    if(p->siguiente==NULL)
+        exit(LST_NO_EXISTE_SIGUIENTE);
+    return p->siguiente;
+}
+
+tPosicion l_anterior(tLista l, tPosicion p){
+
+}
+
