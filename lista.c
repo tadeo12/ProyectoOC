@@ -56,6 +56,14 @@ tPosicion l_primera(tLista l){
     return l;
 }
 
+tPosicion l_ultima(tLista l){
+    tPosicion celdaActual = l;
+    while(celdaActual -> siguiente -> siguiente != NULL){
+        celdaActual = celdaActual -> siguiente;
+    }
+    return celdaActual;
+}
+
 tPosicion l_siguiente(tLista l, tPosicion p){
     if(p->siguiente==NULL)
         exit(LST_NO_EXISTE_SIGUIENTE);
@@ -63,6 +71,11 @@ tPosicion l_siguiente(tLista l, tPosicion p){
 }
 
 tPosicion l_anterior(tLista l, tPosicion p){
-
+    if(l == p)
+        exit(LST_NO_EXISTE_ANTERIOR);
+    tPosicion celdaActual = l;
+    while(celdaActual -> siguiente != p){
+        celdaActual = celdaActual -> siguiente;
+    }
+    return celdaActual;
 }
-
