@@ -79,3 +79,13 @@ tPosicion l_anterior(tLista l, tPosicion p){
     }
     return celdaActual;
 }
+
+int l_longitud(tLista l){
+    int result = 0;
+    tPosicion celdaActual = l;
+    while(celdaActual -> siguiente != NULL){
+        celdaActual = celdaActual -> siguiente;
+        result++;
+    }
+    return result;
+}
