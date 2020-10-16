@@ -89,3 +89,11 @@ int l_longitud(tLista l){
     }
     return result;
 }
+
+tPosicion l_fin(tLista l){
+    tPosicion tP;
+    while(tP -> siguiente -> siguiente != NULL){
+        tP = tP -> siguiente;
+    }
+    return tP -> siguiente;
+}
