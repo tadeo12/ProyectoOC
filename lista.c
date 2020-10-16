@@ -95,5 +95,5 @@ tPosicion l_fin(tLista l){
     while(tP -> siguiente -> siguiente != NULL){
         tP = tP -> siguiente;
     }
-    return tP -> siguiente;
+    return tP -> siguiente -> siguiente;
 }
