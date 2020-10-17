@@ -1,8 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "lista.h"
 
+
 #define LISTA
+
+typedef struct persona{
+    char nombre[10];
+} *tPersona;
 
 void test_lista(){
     tLista lista;
@@ -24,11 +30,42 @@ void test_lista(){
     m = (char*) (l_recuperar(lista, l_ultima(lista)));
     printf("Ultimo %c\n", *m);
 }
+void asesinar(tElemento p){
+    free(p);
+}
+
+
+void test_lista_eliminar(){
+    tPersona primera, segunda;
+    primera= malloc(sizeof(struct persona));
+    strcpy(primera->nombre, "carlos") ;
+
+    segunda= malloc(sizeof(struct persona));
+    strcpy(primera->nombre, "charly") ;
+
+    tLista lista;
+    crear_lista(&lista);
+    tPosicion p=  l_primera(lista);
+    l_insertar(lista, p,&primera);
+
+    p= l_siguiente(lista,p);
+    l_insertar(lista, l_primera(lista),&segunda);}
+
+
+    l_eliminar(lista,p,asesinar);
+
+    tPersona per = (tPersona) (l_recuperar(lista, l_ultima(lista)));
+    printf("ultimo de la lista %s ", per->nombre );
+
+}
 
 int main()
 {
     #ifdef LISTA
     test_lista();
+    test_lista_eliminar();
     #endif // LISTA
+
+
     return 0;
 }
