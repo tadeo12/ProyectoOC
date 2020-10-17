@@ -11,12 +11,12 @@ void crear_lista(tLista * l){
 }
 
 void l_insertar(tLista l, tPosicion p, tElemento e){
-    tPosicion aux=p->siguiente;
-    p->siguiente=malloc(sizeof(struct celda));
-    if(p->siguiente==NULL)
+    tPosicion aux = p -> siguiente;
+    p -> siguiente = malloc(sizeof(struct celda));
+    if(p -> siguiente == NULL)
         exit(LST_ERROR_MEMORIA);
-    p->siguiente->elemento=e;
-    p->siguiente->siguiente=aux;
+    p -> siguiente -> elemento = e;
+    p -> siguiente -> siguiente = aux;
 }
 
 void l_eliminar(tLista l, tPosicion p, void (*fEliminar)(tElemento)){
@@ -91,9 +91,9 @@ int l_longitud(tLista l){
 }
 
 tPosicion l_fin(tLista l){
-    tPosicion tP;
-    while(tP -> siguiente -> siguiente != NULL){
+    tPosicion tP = l;
+    while(tP -> siguiente != NULL){
         tP = tP -> siguiente;
     }
-    return tP -> siguiente -> siguiente;
+    return tP;
 }
