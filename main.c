@@ -52,15 +52,19 @@ void test_lista_eliminar(){
     l_insertar(lista, p,&primera);
 
     p= l_siguiente(lista,p);
-    l_insertar(lista, l_primera(lista),&segunda);
 
-    printf("antes de eliminar todo bien");
+    l_insertar(lista, p,&segunda);
 
-    l_eliminar(lista,p,asesinar);
-
-    printf("despues de eliminar todo bien");
+    printf("antes de eliminar todo bien \n");
 
     tPersona per = (tPersona) (l_recuperar(lista, l_ultima(lista)));
+    printf("ultimo de la lista %s  \n", per->nombre );
+
+    l_eliminar(lista,p,&asesinar);
+
+    printf("despues de eliminar todo bien \n");
+
+    per = (tPersona) (l_recuperar(lista, l_ultima(lista)));
     printf("ultimo de la lista %s ", per->nombre );
 
 }

@@ -44,6 +44,7 @@ void l_destruir(tLista * l, void (*fEliminar)(tElemento)){
         fEliminar(celdaActual->elemento);
     free(celdaActual);
     celdaActual=NULL;
+    l=NULL;
 }
 
 tElemento l_recuperar(tLista l, tPosicion p){
