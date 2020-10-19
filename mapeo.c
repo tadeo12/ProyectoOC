@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "mapeo.h"
+#include "lista.h"
 
 
 void crear_mapeo(tMapeo * m, int ci, int (*fHash)(void *), int (*fComparacion)(void *, void *)){
@@ -10,6 +11,8 @@ void crear_mapeo(tMapeo * m, int ci, int (*fHash)(void *), int (*fComparacion)(v
     (*m) -> longitud_tabla = (10 < ci ? ci : 10);
     (*m) -> hash_code = fHash;
     (*m) -> comparador = fComparacion;
+    (*m) -> tabla_hash = malloc(sizeof(tLista));
+    crear_lista((*m) -> tabla_hash);
 }
 
 tValor m_insertar(tMapeo m, tClave c, tValor v){
