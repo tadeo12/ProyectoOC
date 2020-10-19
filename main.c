@@ -30,6 +30,7 @@ void test_lista(){
     m = (char*) (l_recuperar(lista, l_ultima(lista)));
     printf("Ultimo %c\n", *m);
 }
+
 void asesinar(tElemento p){
     free(p);
 }
@@ -41,18 +42,23 @@ void test_lista_eliminar(){
     strcpy(primera->nombre, "carlos") ;
 
     segunda= malloc(sizeof(struct persona));
-    strcpy(primera->nombre, "charly") ;
+    strcpy(segunda->nombre, "charly") ;
 
     tLista lista;
     crear_lista(&lista);
     tPosicion p=  l_primera(lista);
+
+
     l_insertar(lista, p,&primera);
 
     p= l_siguiente(lista,p);
-    l_insertar(lista, l_primera(lista),&segunda);}
+    l_insertar(lista, l_primera(lista),&segunda);
 
+    printf("antes de eliminar todo bien");
 
     l_eliminar(lista,p,asesinar);
+
+    printf("despues de eliminar todo bien");
 
     tPersona per = (tPersona) (l_recuperar(lista, l_ultima(lista)));
     printf("ultimo de la lista %s ", per->nombre );
@@ -62,7 +68,7 @@ void test_lista_eliminar(){
 int main()
 {
     #ifdef LISTA
-    test_lista();
+    //test_lista();
     test_lista_eliminar();
     #endif // LISTA
 
