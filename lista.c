@@ -59,9 +59,10 @@ tPosicion l_primera(tLista l){
 
 tPosicion l_ultima(tLista l){
     tPosicion celdaActual = l;
-    while(celdaActual -> siguiente -> siguiente != NULL){
-        celdaActual = celdaActual -> siguiente;
-    }
+    if(celdaActual -> siguiente != NULL)
+        while(celdaActual -> siguiente -> siguiente != NULL){
+            celdaActual = celdaActual -> siguiente;
+        }
     return celdaActual;
 }
 

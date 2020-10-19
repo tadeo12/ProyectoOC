@@ -49,18 +49,18 @@ void test_lista_eliminar(){
     tPosicion p=  l_primera(lista);
 
 
-    l_insertar(lista, p,&primera);
+    l_insertar(lista, p, primera);
 
     p= l_siguiente(lista,p);
 
-    l_insertar(lista, p,&segunda);
+    l_insertar(lista, p, segunda);
 
     printf("antes de eliminar todo bien \n");
 
     tPersona per = (tPersona) (l_recuperar(lista, l_ultima(lista)));
     printf("ultimo de la lista %s  \n", per->nombre );
 
-    l_eliminar(lista,p,&asesinar);
+    l_eliminar(lista, l_ultima(lista),&asesinar);
 
     printf("despues de eliminar todo bien \n");
 
