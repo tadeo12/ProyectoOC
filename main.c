@@ -2,9 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include "lista.h"
+#include "mapeo.h"
 
 
-#define LISTA
+#define MAPEO
 
 typedef struct persona{
     char nombre[10];
@@ -60,12 +61,64 @@ void test_lista_eliminar(){
     tPersona per = (tPersona) (l_recuperar(lista, l_ultima(lista)));
     printf("ultimo de la lista %s  \n", per->nombre );
 
-    l_eliminar(lista, l_ultima(lista),&asesinar);
+    //l_eliminar(lista, l_ultima(lista),&asesinar);
+
+    l_destruir(&lista,&asesinar);
 
     printf("despues de eliminar todo bien \n");
 
     per = (tPersona) (l_recuperar(lista, l_ultima(lista)));
     printf("ultimo de la lista %s ", per->nombre );
+
+}
+
+int funcionHash(void * a){
+    return *((int*) a);
+}
+
+int comparador(void * a, void * b){
+    return *((int*) a) - *((int*) b);
+}
+
+void test_mapeo(){
+    tMapeo mapeo;
+    crear_mapeo(&mapeo, 12, &funcionHash, &comparador);
+
+    int c1 = 3, v1 = 1;
+    int c2 = 49, v2 = 2;
+    int c3 = 1, v3 = 3;
+    int c4 = 54, v4 = 4;
+    int c5 = 37, v5 = 5;
+    int c6 = 31, v6 = 6;
+    int c7 = 9, v7 = 7;
+    int c8 = 12, v8 = 8;
+    int c9 = 11, v9 = 9;
+    int c10 = 0, v10 = 10;
+    int c11 = 24, v11 = 11;
+
+    m_insertar(mapeo, &c1, &v1);
+    m_insertar(mapeo, &c2, &v2);
+    m_insertar(mapeo, &c3, &v3);
+    m_insertar(mapeo, &c4, &v4);
+    m_insertar(mapeo, &c5, &v5);
+    m_insertar(mapeo, &c6, &v6);
+    m_insertar(mapeo, &c7, &v7);
+    m_insertar(mapeo, &c8, &v8);
+    m_insertar(mapeo, &c9, &v9);
+    m_insertar(mapeo, &c10, &v10);
+    m_insertar(mapeo, &c11, &v11);
+
+    int * valor = (int *) m_recuperar(mapeo, &c11);
+    printf("Recupero clave 24 : %d\n", *valor);
+    valor = (int *) m_recuperar(mapeo, &c7);
+    printf("Recupero clave 9 : %d\n", *valor);
+    valor = (int *) m_recuperar(mapeo, &c3);
+    printf("Recupero clave 1 : %d\n", *valor);
+    valor = (int *) m_recuperar(mapeo, &c6);
+    printf("Recupero clave 31 : %d\n", *valor);
+    int c12 = 2;
+    valor = (int *) m_recuperar(mapeo, &c12);
+    printf("Recupero clave 2 : %d\n", *valor);
 
 }
 
@@ -75,6 +128,10 @@ int main()
     //test_lista();
     test_lista_eliminar();
     #endif // LISTA
+
+    #ifdef MAPEO
+    test_mapeo();
+    #endif // MAPEO
 
 
     return 0;
