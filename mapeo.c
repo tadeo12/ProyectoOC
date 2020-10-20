@@ -57,7 +57,6 @@ tValor m_insertar(tMapeo m, tClave c, tValor v){
         int encontre = 0;
         while(!encontre && ( actual != l_ultima((m) -> tabla_hash) )){
             actual = l_siguiente( ((m) -> tabla_hash) ,actual);
-            actual
         }
     }
 }
@@ -74,9 +73,11 @@ tValor m_recuperar(tMapeo m, tClave c){
     int claveHash = m -> hash_code(c) % m -> longitud_tabla;
     tLista bucket = *((m -> tabla_hash) + claveHash);
     tPosicion p = l_primera(bucket);
+    tPosicion fin = l_ultima(bucket);
     tValor aRetornar = NULL;
     tEntrada entrada = (tEntrada) l_recuperar(bucket, p);
-    while(l_siguiente(bucket, p) != NULL && m -> comparador(entrada -> clave, c) == 0){     //Hasta que termine de ver todo el bucket o lo encuentre
+
+    while(p != fin && m -> comparador(entrada -> clave, c) == 0){     //Hasta que termine de ver todo el bucket o lo encuentre
         p = l_siguiente(bucket, p);
         entrada = (tEntrada) l_recuperar(bucket, p);
     }
