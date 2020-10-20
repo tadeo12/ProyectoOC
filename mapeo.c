@@ -61,8 +61,28 @@ tValor m_insertar(tMapeo m, tClave c, tValor v){
     }
 }
 
+void fEliminarEntrada(tEntrada entrada, void (*fEliminarC)(void *), void (*fEliminarV)(void *)){
+    fEliminarC(entrada->clave);
+    fEliminarV(entrada->valor);
+    free(entrada);
+    entrada=NULL;
+}
+
 void m_eliminar(tMapeo m, tClave c, void (*fEliminarC)(void *), void (*fEliminarV)(void *)){
-    //TODO
+    int valorHash = m->hash_code(c) % (m->longitud_tabla);
+    tLista bucket= m->tabla_hash+valorHash;
+    tPosicion fin= l_fin(bucket);
+    tPosicion pos= l_primera(bucket);
+    tEntrada entrada= l_recuperar(bucket,pos);
+    while(m->comparador(entrada->clave, c)!=0  && pos!=fin) {
+    //mientras no encuentre la clave y no haya recorrido toda la lista
+        pos=l_siguiente(bucket,pos);
+        entrada=l_recuperar(bucket,pos);
+    }
+    if(pos!=fin){
+        fEliminarEntrada((tEntrada)(pos->elemento), fEliminarC, fEliminarV);
+        m->cantidad_elementos--;
+    }
 }
 
 void m_destruir(tMapeo * m, void (*fEliminarC)(void *), void (*fEliminarV)(void *)){
