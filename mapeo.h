@@ -55,7 +55,7 @@ extern tValor m_insertar(tMapeo m, tClave c, tValor v);
 extern void m_eliminar(tMapeo m, tClave c, void (*fEliminarC)(void *), void (*fEliminarV)(void *));
 
 /**
- Destruye el mapeo M, elimininando cada una de sus entradas.
+ Destruye el mapeo M, eliminando cada una de sus entradas.
  Las claves y valores almacenados en las entradas son eliminados mediante las funciones fEliminarC y fEliminarV.
 **/
 extern void m_destruir(tMapeo * m, void (*fEliminarC)(void *), void (*fEliminarV)(void *));
