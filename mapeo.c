@@ -4,6 +4,9 @@
 #include "lista.h"
 
 
+void (*funcionEliminarClave)(void *)= NULL;
+void (*funcionEliminarValor)(void *)= NULL;
+
 void crear_mapeo(tMapeo * m, int ci, int (*fHash)(void *), int (*fComparacion)(void *, void *)){
     *m = malloc(sizeof(tMapeo));
     if(*m == NULL)
@@ -100,9 +103,9 @@ void redimensionar(int longitud, tMapeo * m){
 
 }
 
-void fEliminarEntrada(tEntrada entrada, void (*fEliminarC)(void *), void (*fEliminarV)(void *)){
-    fEliminarC(entrada->clave);
-    fEliminarV(entrada->valor);
+void fEliminarEntrada(tEntrada entrada){
+    funcionEliminarClave(entrada->clave);
+    funcionEliminarValor(entrada->valor);
     free(entrada);
     entrada=NULL;
 }
@@ -119,7 +122,9 @@ void m_eliminar(tMapeo m, tClave c, void (*fEliminarC)(void *), void (*fEliminar
         entrada=l_recuperar(bucket,pos);
     }
     if(pos!=fin){
-        fEliminarEntrada((tEntrada)(pos->elemento), fEliminarC, fEliminarV);
+        funcionEliminarClave=fEliminarC;
+        funcionEliminarValor=fEliminarV;
+        l_eliminar(bucket,pos,fEliminarEntrada);
         m->cantidad_elementos--;
     }
 }
