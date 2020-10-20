@@ -41,6 +41,7 @@ tValor m_insertar(tMapeo m, tClave c, tValor v){
     tValor toReturn = NULL;
     if(m == NULL)
         exit(MAP_ERROR_MEMORIA);
+
     tEntrada e;
     e -> clave = c;
     e -> valor = v;
@@ -49,17 +50,53 @@ tValor m_insertar(tMapeo m, tClave c, tValor v){
     unsigned int cantElem = ((m)-> cantidad_elementos);
 
     if((longitud/cantElem) >= (longitud * (75/100))){
-        //redimensionar
+        redimensionar(longitud * 2,m);
     }else{
         int claveHash = ( m -> hash_code(c) ) % ( m -> longitud_tabla );
         tPosicion actual = l_primera( (m) -> tabla_hash );
         actual -> elemento = NULL;
-        int encontre = 0;
-        while(!encontre && ( actual != l_ultima((m) -> tabla_hash) )){
-            actual = l_siguiente( ((m) -> tabla_hash) ,actual);
-            actual
+        int encontre = ( l_primera( (m) -> tabla_hash ) == NULL );
+        tEntrada entrada;
+        if(!encontre){
+            while(!encontre && ( actual != l_ultima((m) -> tabla_hash) )){
+                actual = l_siguiente( ((m) -> tabla_hash) ,actual);
+                entrada = ( tEntrada ) actual -> elemento;
+                if(!comparador(entrada -> clave, c)){
+                    encontre = 1;
+                    toReturn = entrada -> valor;
+                    entrada -> valor = v;
+                }
+            }
+            if(!encontre){
+                actual = ( l_ultima( (m) -> tabla_hash ) );
+                l_insertar((m) -> tabla_hash, actual -> siguiente, e);
+                (m) -> cantidad_elementos++;
+            }//end if ultimo
+
+        }//end if1
+        else{
+            actual = ( l_ultima( (m) -> tabla_hash ) );
+            l_insertar((m) -> tabla_hash, actual -> siguiente, e);
+            (m) -> cantidad_elementos++;
         }
-    }
+
+    }//end else
+}
+
+void redimensionar(int longitud, tMapeo * m){
+    tLista * aux = (*m) -> tabla_hash;
+    (*m) -> tabla_hash = malloc( longitud * sizeof( tLista ) );
+    tLista aux1;
+    tPosicion pos = l_primera((*m) -> tabla_hash);
+   for(int i = 0; i < ( (*m) -> longitud_tabla ) ; i++){
+        aux1 = *(aux + i);
+        l_insertar( (*m) -> tabla_hash , pos, aux1 );
+        pos = l_siguiente( (*m) -> tabla_hash, pos );
+   }
+   for(int i=( (*m) -> longitud_tabla ); i < longitud ; i++){
+         crear_lista((*m) -> tabla_hash + i);
+   }
+
 }
 
 void m_eliminar(tMapeo m, tClave c, void (*fEliminarC)(void *), void (*fEliminarV)(void *)){
