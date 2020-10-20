@@ -125,7 +125,7 @@ void test_mapeo(){
 int main()
 {
     #ifdef LISTA
-    //test_lista();
+    test_lista();
     test_lista_eliminar();
     #endif // LISTA
 
