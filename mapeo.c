@@ -4,6 +4,9 @@
 #include "lista.h"
 
 
+void (*funcionEliminarClave)(void *)= NULL;
+void (*funcionEliminarValor)(void *)= NULL;
+
 void crear_mapeo(tMapeo * m, int ci, int (*fHash)(void *), int (*fComparacion)(void *, void *)){
     *m = malloc(sizeof(tMapeo));
     if(*m == NULL)
@@ -80,9 +83,9 @@ tValor m_insertar(tMapeo m, tClave c, tValor v){
 
 
 
-void fEliminarEntrada(tEntrada entrada, void (*fEliminarC)(void *), void (*fEliminarV)(void *)){
-    fEliminarC(entrada->clave);
-    fEliminarV(entrada->valor);
+void fEliminarEntrada(tEntrada entrada){
+    funcionEliminarClave(entrada->clave);
+    funcionEliminarValor(entrada->valor);
     free(entrada);
     entrada=NULL;
 }
@@ -99,13 +102,38 @@ void m_eliminar(tMapeo m, tClave c, void (*fEliminarC)(void *), void (*fEliminar
         entrada=l_recuperar(bucket,pos);
     }
     if(pos!=fin){
-        fEliminarEntrada((tEntrada)(pos->elemento), fEliminarC, fEliminarV);
+        funcionEliminarClave=fEliminarC;
+        funcionEliminarValor=fEliminarV;
+        l_eliminar(bucket,pos,fEliminarEntrada);
         m->cantidad_elementos--;
     }
 }
 
+/**
+ Destruye el mapeo M, elimininando cada una de sus entradas.
+ Las claves y valores almacenados en las entradas son eliminados mediante las funciones fEliminarC y fEliminarV.
+**/
 void m_destruir(tMapeo * m, void (*fEliminarC)(void *), void (*fEliminarV)(void *)){
-    //TODO
+    tPosicion pos;
+    tEntrada e;
+    for(int i=0; i < ( (*m) -> longitud_tabla); i++){
+        pos = l_primera(*( ((*m) -> tabla_hash ) + i));
+        while( pos != l_fin( *( ((*m) -> tabla_hash ) + i) )){
+           e = (tEntrada)( pos -> elemento );
+           if( e != NULL){
+                fEliminarC( e -> clave );
+                fEliminarV( e -> valor );
+           }
+           free(e);
+           e = NULL;
+           pos = l_siguiente(*( ((*m) -> tabla_hash)),pos);
+        }
+        free(( ((*m) -> tabla_hash ) + i));
+        *( ((*m) -> tabla_hash ) + i) = NULL;
+    }
+    free(m);
+    m = NULL;
+    pos = NULL;
 }
 
 tValor m_recuperar(tMapeo m, tClave c){
