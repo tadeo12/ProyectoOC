@@ -134,8 +134,8 @@ void m_eliminar(tMapeo m, tClave c, void (*fEliminarC)(void *), void (*fEliminar
  Las claves y valores almacenados en las entradas son eliminados mediante las funciones fEliminarC y fEliminarV.
 **/
 void m_destruir(tMapeo * m, void (*fEliminarC)(void *), void (*fEliminarV)(void *)){
-tPosicion pos;
-tEntrada e;
+    tPosicion pos;
+    tEntrada e;
     for(int i=0; i < ( (*m) -> longitud_tabla); i++){
         pos = l_primera(*( ((*m) -> tabla_hash ) + i));
         while( pos != l_fin( *( ((*m) -> tabla_hash ) + i) )){
