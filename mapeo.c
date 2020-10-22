@@ -150,7 +150,7 @@ tValor m_recuperar(tMapeo m, tClave c){
     for(int i = 0; i < largo && !encontre; i++){
         printf("Intento leer\n");
         entrada = l_recuperar(bucket, p);
-        printf(" clave actual : %i | clave parametro: %i", &(entrada -> clave),&c);
+        printf(" clave actual : %i | clave parametro: %i", *(int *)(entrada -> clave),*(int *)c);
         printf("\n");
         if( m -> comparador( &(entrada -> clave), &c) == 0){
             encontre = 1;
