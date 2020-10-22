@@ -109,10 +109,6 @@ void m_eliminar(tMapeo m, tClave c, void (*fEliminarC)(void *), void (*fEliminar
     }
 }
 
-/**
- Destruye el mapeo M, elimininando cada una de sus entradas.
- Las claves y valores almacenados en las entradas son eliminados mediante las funciones fEliminarC y fEliminarV.
-**/
 void m_destruir(tMapeo * m, void (*fEliminarC)(void *), void (*fEliminarV)(void *)){
     tPosicion pos;
     tEntrada e;
