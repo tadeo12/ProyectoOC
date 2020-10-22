@@ -116,20 +116,21 @@ void m_eliminar(tMapeo m, tClave c, void (*fEliminarC)(void *), void (*fEliminar
 void m_destruir(tMapeo * m, void (*fEliminarC)(void *), void (*fEliminarV)(void *)){
     tPosicion pos;
     tEntrada e;
+
+    void (*funcionEliminarClave) (void *)= (*fEliminarC);
+    void (*funcionEliminarValor) (void *)= (*fEliminarV);
+
     for(int i=0; i < ( (*m) -> longitud_tabla); i++){
         pos = l_primera(*( ((*m) -> tabla_hash ) + i));
         while( pos != l_fin( *( ((*m) -> tabla_hash ) + i) )){
-           e = (tEntrada)( pos -> elemento );
+           e = ( l_recuperar( (((*m) -> tabla_hash ) + i) , pos ) );//(tEntrada)
            if( e != NULL){
-                fEliminarC( e -> clave );
-                fEliminarV( e -> valor );
+                funcionEliminarClave( e -> clave );
+                funcionEliminarValor( e -> valor );
            }
-           free(e);
-           e = NULL;
            pos = l_siguiente(*( ((*m) -> tabla_hash)),pos);
         }
-        free(( ((*m) -> tabla_hash ) + i));
-        *( ((*m) -> tabla_hash ) + i) = NULL;
+        l_destruir(( ((*m) -> tabla_hash ) + i),fEliminarEntrada);
     }
     free(m);
     m = NULL;
