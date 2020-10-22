@@ -75,8 +75,12 @@ tValor m_insertar(tMapeo m, tClave c, tValor v){
         tEntrada entrada = malloc(sizeof(tEntrada));
         entrada -> clave = c;
         entrada -> valor = v;
-        l_insertar(*(m -> tabla_hash + claveHash), l_fin(*(m -> tabla_hash + claveHash)), entrada);
+        l_insertar(*(m -> tabla_hash + claveHash), l_fin(*(m -> tabla_hash + claveHash)) , entrada);//l_ultima(*(m -> tabla_hash + claveHash))
+        printf("bucket %i | largo bucket %i | largo mapeo %i \n",claveHash,l_longitud(*(m -> tabla_hash + claveHash)),m->longitud_tabla);
+
         (m) -> cantidad_elementos++;
+         printf(" cantidadElementos: %i\n",m -> cantidad_elementos);
+         printf("\n");
     }
     return toReturn;
 }
@@ -146,6 +150,8 @@ tValor m_recuperar(tMapeo m, tClave c){
     for(int i = 0; i < largo && !encontre; i++){
         printf("Intento leer\n");
         entrada = l_recuperar(bucket, p);
+        printf(" clave actual : %i | clave parametro: %i", &(entrada -> clave),&c);
+        printf("\n");
         if( m -> comparador( &(entrada -> clave), &c) == 0){
             encontre = 1;
             aRetornar = entrada -> valor;
