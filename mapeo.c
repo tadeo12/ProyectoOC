@@ -123,7 +123,7 @@ void m_destruir(tMapeo * m, void (*fEliminarC)(void *), void (*fEliminarV)(void 
     for(int i=0; i < ( (*m) -> longitud_tabla); i++){
         pos = l_primera(*( ((*m) -> tabla_hash ) + i));
         while( pos != l_fin( *( ((*m) -> tabla_hash ) + i) )){
-           e = ( l_recuperar( (((*m) -> tabla_hash ) + i) , pos ) );//(tEntrada)
+           e = ( l_recuperar( (((*m) -> tabla_hash ) + i) , pos ) );
            if( e != NULL){
                 funcionEliminarClave( e -> clave );
                 funcionEliminarValor( e -> valor );
