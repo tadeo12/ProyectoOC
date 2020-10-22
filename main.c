@@ -83,7 +83,7 @@ int comparador(void * a, void * b){
 void test_mapeo(){
     tMapeo mapeo;
     printf("Creo mapeo\n");
-    crear_mapeo(&mapeo, 12, &funcionHash, &comparador);
+    crear_mapeo(&mapeo, 20, &funcionHash, &comparador);
 
     int c1 = 3, v1 = 1;
     int c2 = 49, v2 = 2;
@@ -114,19 +114,29 @@ void test_mapeo(){
     printf("Terminé de ingresar elementos\n");
 
     int * valor = (int *) m_recuperar(mapeo, &c11);
+    printf(" valor esperado: %d | Devolvió: %d\n",v11,&valor);
+    printf("\n");
     if(valor != NULL)
         printf("Recupero clave 24 : %d\n", *valor);
     valor = (int *) m_recuperar(mapeo, &c7);
+    printf(" valor esperado: %d | Devolvió: %d\n",v7,*valor);
+    printf("\n");
     if(valor != NULL)
         printf("Recupero clave 9 : %d\n", *valor);
     valor = (int *) m_recuperar(mapeo, &c3);
+    printf(" valor esperado: %d | Devolvió: %d\n",v3,*valor);
+    printf("\n");
     if(valor != NULL)
         printf("Recupero clave 1 : %d\n", *valor);
     valor = (int *) m_recuperar(mapeo, &c6);
+    printf(" valor esperado: %d | Devolvió: %d\n",v6,*valor);
+    printf("\n");
     if(valor != NULL)
         printf("Recupero clave 31 : %d\n", *valor);
     int c12 = 2;
     valor = (int *) m_recuperar(mapeo, &c12);
+    printf(" valor esperado: %d | Devolvió: %d\n",NULL,*valor);
+    printf("\n");
     if(valor != NULL)
         printf("Recupero clave 2 : %d\n", *valor);
 
