@@ -48,10 +48,10 @@ tValor m_insertar(tMapeo m, tClave c, tValor v){
 
     float longitud = ((m)-> longitud_tabla);
     float cantElem = ((m)-> cantidad_elementos);
-    printf(" redimensiono ? %i\n",((cantElem / longitud) >= (0.75)));
-    if((cantElem / longitud) >= (0.75))
+    if((cantElem / longitud) >= (0.75)){
+        printf(" redimensiono ");
         redimensionar(m -> longitud_tabla * 2,m);
-    printf(" ( ͡° ͜ʖ ͡°) \n");
+    }
     printf(" hash: %i\n",( m -> hash_code(c) ));
     int claveHash = ( m -> hash_code(c) ) % ( m -> longitud_tabla );
     printf("Lista: %d", claveHash);

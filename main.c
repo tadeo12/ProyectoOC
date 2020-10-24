@@ -111,32 +111,32 @@ void test_mapeo(){
     m_insertar(mapeo, &c10, &v10);
     m_insertar(mapeo, &c11, &v11);
 
-    printf("Terminé de ingresar elementos\n");
+    printf("Termino de ingresar elementos\n");
 
     int * valor = (int *) m_recuperar(mapeo, &c11);
-    printf(" valor esperado: %d | Devolvió: %d\n",v11,&valor);
+    printf(" valor esperado: %d | Devuelve: %d\n",v11,&valor);
     printf("\n");
     if(valor != NULL)
         printf("Recupero clave 24 : %d\n", *valor);
     valor = (int *) m_recuperar(mapeo, &c7);
-    printf(" valor esperado: %d | Devolvió: %d\n",v7,*valor);
+    printf(" valor esperado: %d | Devuelve: %d\n",v7,*valor);
     printf("\n");
     if(valor != NULL)
         printf("Recupero clave 9 : %d\n", *valor);
     valor = (int *) m_recuperar(mapeo, &c3);
-    printf(" valor esperado: %d | Devolvió: %d\n",v3,*valor);
+    printf(" valor esperado: %d | Devuelve: %d\n",v3,*valor);
     printf("\n");
     if(valor != NULL)
         printf("Recupero clave 1 : %d\n", *valor);
     valor = (int *) m_recuperar(mapeo, &c6);
-    printf(" valor esperado: %d | Devolvió: %d\n",v6,*valor);
+    printf(" valor esperado: %d | Devuelve: %d\n",v6,*valor);
     printf("\n");
     if(valor != NULL)
         printf("Recupero clave 31 : %d\n", *valor);
     int c12 = 2;
     valor = (int *) m_recuperar(mapeo, &c12);
      if(valor != NULL)
-        printf(" valor esperado: %d | Devolvió: %d\n",NULL,*valor);
+        printf(" valor esperado: %d | Devuelve: %d\n",NULL,*valor);
     else printf("no se encontro clave %i en mapeo\n",c12);
     printf("\n");
     if(valor != NULL)

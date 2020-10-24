@@ -8,8 +8,8 @@
 #define ERROR_APERTURA_ARCHIVO        -1
 #define ERROR_INVOCACION_PROGRAMA     -2
 
-void evaluador (char archivo[]){
-
+void evaluador (char ruta_archivo[]){
+    FILE *archivo=fopen(ruta_archivo,"r");
 
 
 
