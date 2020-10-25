@@ -30,6 +30,7 @@ void l_eliminar(tLista l, tPosicion p, void (*fEliminar)(tElemento)){
 }
 
 void l_destruir(tLista * l, void (*fEliminar)(tElemento)){
+    printf("Intento destruir\n");
     tPosicion celdaActual=(*l);
     while(celdaActual->siguiente!=NULL){
         tPosicion celdaAEliminar=celdaActual;

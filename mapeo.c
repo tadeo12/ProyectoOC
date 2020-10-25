@@ -12,11 +12,20 @@ void crear_mapeo(tMapeo * m, int ci, int (*fHash)(void *), int (*fComparacion)(v
     if(*m == NULL)
         exit(MAP_ERROR_MEMORIA);
     (*m) -> longitud_tabla = (10 < ci ? ci : 10);                               //La longitud de la tabla es inicialmente el mayor entre 10 y ci
+    (*m) -> cantidad_elementos = 0;
     (*m) -> hash_code = fHash;
     (*m) -> comparador = fComparacion;
     (*m) -> tabla_hash = malloc( ((*m) -> longitud_tabla) * sizeof(tLista));    //Creo los buckets
     for(int i = 0; i < (*m) -> longitud_tabla; i++)
         crear_lista((*m) -> tabla_hash + i);                                    //Creo las listas en los buckets
+}
+
+void fEliminarEntrada(tElemento entrada){
+    tEntrada entry=(tEntrada) entrada;
+    funcionEliminarClave(entry->clave);
+    funcionEliminarValor(entry->valor);
+    free(entrada);
+    entrada=NULL;
 }
 
 void redimensionar(int longitud, tMapeo m){
@@ -25,22 +34,24 @@ void redimensionar(int longitud, tMapeo m){
     tPosicion pos;
     int largo, largoAnterior = m -> longitud_tabla;
     m -> longitud_tabla = longitud;
+    m -> cantidad_elementos = 0;
     for(int i = 0 ; i < longitud ; i++){
         crear_lista(m -> tabla_hash + i);
     }
-    printf("Empiezo a pasar listas");
+    printf("Empiezo a pasar listas\n");
     for(int i = 0; i < largoAnterior ; i++){
-        pos = l_primera(*aux1);
-        largo = l_longitud(*aux1);
+        printf("Lista nueva\n");
+        pos = l_primera(*(aux1 + i));
+        largo = l_longitud(*(aux1 + i));
         for(int j = 0; j < largo; j++){
-            tEntrada entrada = l_recuperar(*aux1, pos);
+            tEntrada entrada = l_recuperar(*(aux1 + i), pos);
             m_insertar(m, (entrada -> clave), (entrada -> valor));
             if(j < largo - 1)
-                pos = l_siguiente(*aux1, pos);
+                pos = l_siguiente(*(aux1 + i), pos);
         }
         //TODO eliminar las listas del arreglo viejo
-        aux1++;
     }
+    printf("Termine de redimensionar AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n");
 
 }
 
@@ -50,7 +61,7 @@ tValor m_insertar(tMapeo m, tClave c, tValor v){
     float longitud = ((m)-> longitud_tabla);
     float cantElem = ((m)-> cantidad_elementos);
     if((cantElem / longitud) >= (0.75)){
-        printf(" redimensiono AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        printf(" redimensiono AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n");
         redimensionar(m -> longitud_tabla * 2,m);
     }
     printf(" hash: %i\n",( m -> hash_code(c) ));
@@ -79,7 +90,7 @@ tValor m_insertar(tMapeo m, tClave c, tValor v){
         entrada -> clave = c;
         entrada -> valor = v;
         l_insertar(*(m -> tabla_hash + claveHash), l_fin(*(m -> tabla_hash + claveHash)) , entrada);//l_ultima(*(m -> tabla_hash + claveHash))
-        printf("bucket %i | largo bucket %i | largo mapeo %i \n",claveHash,l_longitud(*(m -> tabla_hash + claveHash)),m->longitud_tabla);
+        printf("bucket %i | largo bucket %i | cant elementos %i | largo mapeo %i \n",claveHash,l_longitud(*(m -> tabla_hash + claveHash)),m -> cantidad_elementos, m->longitud_tabla);
 
         (m) -> cantidad_elementos++;
          printf(" cantidadElementos: %i\n",m -> cantidad_elementos);
@@ -90,21 +101,37 @@ tValor m_insertar(tMapeo m, tClave c, tValor v){
 
 
 
-void fEliminarEntrada(tElemento entrada){
-    tEntrada entry=(tEntrada) entrada;
-    funcionEliminarClave(entry->clave);
-    funcionEliminarValor(entry->valor);
-    free(entrada);
-    entrada=NULL;
-}
+
 
 void m_eliminar(tMapeo m, tClave c, void (*fEliminarC)(void *), void (*fEliminarV)(void *)){
     printf("entre en m_eliminar \n");
     int valorHash = m->hash_code(c) % (m->longitud_tabla);
-    tLista bucket= *(m -> tabla_hash +valorHash );
-    tPosicion fin= l_fin(bucket);
+    tLista bucket= *(m -> tabla_hash + valorHash );
+    //tPosicion fin= l_fin(bucket);
     tPosicion pos= l_primera(bucket);
     tEntrada entrada= l_recuperar(bucket,pos);
+
+    int largo = l_longitud(bucket);
+    int encontre = 0;
+    for(int i = 0; i < largo && !encontre; i++){
+        printf("Intento leer\n");
+        entrada = l_recuperar(bucket, pos);
+        printf(" clave actual : %i | clave parametro: %i", *(int *)(entrada -> clave),*(int *)c);
+        printf("\n");
+        if( m -> comparador( &(entrada -> clave), &c) == 0){
+            encontre = 1;
+            printf("encontre la clave a eliminar \n");
+            funcionEliminarClave=fEliminarC;
+            funcionEliminarValor=fEliminarV;
+            l_eliminar(bucket,pos,fEliminarEntrada);
+            m->cantidad_elementos--;
+        }
+        if(i < largo - 1)
+            pos = l_siguiente(bucket, pos);
+    }
+
+
+    /*
     while(m->comparador(entrada->clave, c)!=0  && pos!=fin) {
     //mientras no encuentre la clave y no haya recorrido toda la lista
         pos=l_siguiente(bucket,pos);
@@ -118,6 +145,8 @@ void m_eliminar(tMapeo m, tClave c, void (*fEliminarC)(void *), void (*fEliminar
         l_eliminar(bucket,pos,fEliminarEntrada);
         m->cantidad_elementos--;
     }
+    */
+    printf("salgo de eliminar\n");
 }
 
 void m_destruir(tMapeo * m, void (*fEliminarC)(void *), void (*fEliminarV)(void *)){
@@ -130,7 +159,7 @@ void m_destruir(tMapeo * m, void (*fEliminarC)(void *), void (*fEliminarV)(void 
     for(int i=0; i < ( (*m) -> longitud_tabla); i++){
         pos = l_primera(*( ((*m) -> tabla_hash ) + i));
         while( pos != l_fin( *( ((*m) -> tabla_hash ) + i) )){
-           e = ( l_recuperar( (((*m) -> tabla_hash ) + i) , pos ) );
+           e = ( l_recuperar( (*((*m) -> tabla_hash ) + i) , pos ) );
            if( e != NULL){
                 funcionEliminarClave( e -> clave );
                 funcionEliminarValor( e -> valor );

@@ -47,6 +47,8 @@ void test_lista_eliminar(){
 
     tLista lista;
     crear_lista(&lista);
+    l_destruir(&lista, &asesinar);
+    crear_lista(&lista);
     tPosicion p=  l_primera(lista);
 
 
@@ -61,9 +63,9 @@ void test_lista_eliminar(){
     tPersona per = (tPersona) (l_recuperar(lista, l_ultima(lista)));
     printf("ultimo de la lista %s  \n", per->nombre );
 
-    //l_eliminar(lista, l_ultima(lista),&asesinar);
+    l_eliminar(lista, l_ultima(lista),&asesinar);
 
-    l_destruir(&lista,&asesinar);
+    //l_destruir(&lista,&asesinar);
 
     printf("despues de eliminar todo bien \n");
 
@@ -119,46 +121,54 @@ void test_mapeo(){
 
     int * valor = (int *) m_recuperar(mapeo, &c11);
     printf(" valor esperado: %d | Devuelve: %d\n",v11,*valor);
-    printf("\n");
     if(valor != NULL)
         printf("Recupero clave 24 : %d\n", *valor);
+    printf("\n");
     valor = (int *) m_recuperar(mapeo, &c7);
     printf(" valor esperado: %d | Devuelve: %d\n",v7,*valor);
-    printf("\n");
     if(valor != NULL)
         printf("Recupero clave 9 : %d\n", *valor);
+    printf("\n");
     valor = (int *) m_recuperar(mapeo, &c3);
     printf(" valor esperado: %d | Devuelve: %d\n",v3,*valor);
-    printf("\n");
     if(valor != NULL)
         printf("Recupero clave 1 : %d\n", *valor);
+    printf("\n");
     valor = (int *) m_recuperar(mapeo, &c6);
     printf(" valor esperado: %d | Devuelve: %d\n",v6,*valor);
-    printf("\n");
     if(valor != NULL)
         printf("Recupero clave 31 : %d\n", *valor);
+    printf("\n");
     int c12 = 2;
     valor = (int *) m_recuperar(mapeo, &c12);
      if(valor != NULL)
-        printf(" valor esperado: %d | Devuelve: NULL\n",*valor);
+        printf(" valor esperado: NULL | Devuelve: %i\n",*valor);
     else printf("no se encontro clave %i en mapeo\n",c12);
-    printf("\n");
     if(valor != NULL)
         printf("Recupero clave 2 : %d\n", *valor);
+    printf("\n");
 
     //prueba m_eliminar
     printf("PRUEBA ELIMINAR\n");
     printf("cantidad de elementos %d \n", mapeo->cantidad_elementos);
     m_eliminar(mapeo,&c1,&fEliminarEntero,&fEliminarEntero);
 
-    if(m_recuperar(mapeo,c1)==NULL)
+    if(m_recuperar(mapeo,&c1)==NULL)
+        printf("se elimino\n");
+    else
+        printf("no se elimino\n");
+
+    int c13 = 101;
+    m_eliminar(mapeo,&c13,&fEliminarEntero,&fEliminarEntero);
+
+    if(m_recuperar(mapeo,&c13)==NULL)
         printf("se elimino\n");
     else
         printf("no se elimino\n");
     printf("cantidad de elementos %d \n", mapeo->cantidad_elementos);
 
     //insertar sobre existentes
-    printf("INSERTAR SOBRE EXISTENTES\n");
+    printf("\nINSERTAR SOBRE EXISTENTES\n");
     int v12 = 30;
     int v13 = 31;
     int v14 = 69;
@@ -166,14 +176,20 @@ void test_mapeo(){
     valor = (int *)m_insertar(mapeo,&c2,&v12);
     printf("clave %i",c2);
     printf(" valor esperado: %d | Devuelve: %d\n",v2,*valor);
+    valor = (int *)m_recuperar(mapeo,&c2);
+    printf(" valor esperado: %d | Devuelve: %d\n",v12,*valor);
     printf("\n");
     valor = (int *)m_insertar(mapeo,&c3,&v13);
     printf("clave %i",c3);
     printf(" valor esperado: %d | Devuelve: %d\n",v3,*valor);
+    valor = (int *)m_recuperar(mapeo,&c3);
+    printf(" valor esperado: %d | Devuelve: %d\n",v13,*valor);
     printf("\n");
     valor = (int *)m_insertar(mapeo,&c4,&v14);
     printf("clave %i",c4);
     printf(" valor esperado: %d | Devuelve: %d\n",v4,*valor);
+    valor = (int *)m_recuperar(mapeo,&c4);
+    printf(" valor esperado: %d | Devuelve: %d\n",v14,*valor);
     printf("\n");
 
 
@@ -183,7 +199,7 @@ void test_mapeo(){
 int main()
 {
     #ifdef LISTA
-    test_lista();
+    //test_lista();
     test_lista_eliminar();
     #endif // LISTA
 
