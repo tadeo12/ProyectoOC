@@ -83,7 +83,7 @@ int comparador(void * a, void * b){
 void test_mapeo(){
     tMapeo mapeo;
     printf("Creo mapeo\n");
-    crear_mapeo(&mapeo, 20, &funcionHash, &comparador);
+    crear_mapeo(&mapeo, 10, &funcionHash, &comparador);
 
     int c1 = 3, v1 = 1;
     int c2 = 49, v2 = 2;

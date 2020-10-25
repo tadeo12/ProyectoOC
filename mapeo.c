@@ -34,7 +34,7 @@ void redimensionar(int longitud, tMapeo m){
         largo = l_longitud(*aux1);
         for(int j = 0; j < largo; j++){
             tEntrada entrada = l_recuperar(*aux1, pos);
-            m_insertar(m, &(entrada -> clave), &(entrada -> valor));
+            m_insertar(m, (entrada -> clave), (entrada -> valor));
             if(j < largo - 1)
                 pos = l_siguiente(*aux1, pos);
         }
