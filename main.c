@@ -136,7 +136,7 @@ void test_mapeo(){
     int c12 = 2;
     valor = (int *) m_recuperar(mapeo, &c12);
      if(valor != NULL)
-        printf(" valor esperado: %d | Devuelve: %d\n",NULL,*valor);
+        printf(" valor esperado: %d | Devuelve: NULL\n",*valor);
     else printf("no se encontro clave %i en mapeo\n",c12);
     printf("\n");
     if(valor != NULL)
@@ -146,7 +146,7 @@ void test_mapeo(){
     printf("INSERTAR SOBRE EXISTENTES\n");
     int v12 = 30;
     int v13 = 31;
-    int v14 = 69; // ( ͡° ͜ʖ ͡°) 7u7
+    int v14 = 69;
 
     valor = (int *)m_insertar(mapeo,&c2,&v12);
     printf("clave %i",c2);
