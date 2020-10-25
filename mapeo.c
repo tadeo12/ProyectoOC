@@ -90,16 +90,18 @@ tValor m_insertar(tMapeo m, tClave c, tValor v){
 
 
 
-void fEliminarEntrada(tEntrada entrada){
-    funcionEliminarClave(entrada->clave);
-    funcionEliminarValor(entrada->valor);
+void fEliminarEntrada(tElemento entrada){
+    tEntrada entry=(tEntrada) entrada;
+    funcionEliminarClave(entry->clave);
+    funcionEliminarValor(entry->valor);
     free(entrada);
     entrada=NULL;
 }
 
 void m_eliminar(tMapeo m, tClave c, void (*fEliminarC)(void *), void (*fEliminarV)(void *)){
+    printf("entre en m_eliminar \n");
     int valorHash = m->hash_code(c) % (m->longitud_tabla);
-    tLista bucket= m->tabla_hash+valorHash;
+    tLista bucket= *(m -> tabla_hash +valorHash );
     tPosicion fin= l_fin(bucket);
     tPosicion pos= l_primera(bucket);
     tEntrada entrada= l_recuperar(bucket,pos);
@@ -107,8 +109,10 @@ void m_eliminar(tMapeo m, tClave c, void (*fEliminarC)(void *), void (*fEliminar
     //mientras no encuentre la clave y no haya recorrido toda la lista
         pos=l_siguiente(bucket,pos);
         entrada=l_recuperar(bucket,pos);
+        printf("buscando clave \n");
     }
     if(pos!=fin){
+        printf("encontre la clave a eliminar \n");
         funcionEliminarClave=fEliminarC;
         funcionEliminarValor=fEliminarV;
         l_eliminar(bucket,pos,fEliminarEntrada);

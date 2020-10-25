@@ -80,6 +80,10 @@ int comparador(void * a, void * b){
     return *((int*) a) - *((int*) b);
 }
 
+void fEliminarEntero(tElemento i){
+
+}
+
 void test_mapeo(){
     tMapeo mapeo;
     printf("Creo mapeo\n");
@@ -142,6 +146,17 @@ void test_mapeo(){
     if(valor != NULL)
         printf("Recupero clave 2 : %d\n", *valor);
 
+    //prueba m_eliminar
+    printf("PRUEBA ELIMINAR\n");
+    printf("cantidad de elementos %d \n", mapeo->cantidad_elementos);
+    m_eliminar(mapeo,&c1,&fEliminarEntero,&fEliminarEntero);
+
+    if(m_recuperar(mapeo,c1)==NULL)
+        printf("se elimino\n");
+    else
+        printf("no se elimino\n");
+    printf("cantidad de elementos %d \n", mapeo->cantidad_elementos);
+
     //insertar sobre existentes
     printf("INSERTAR SOBRE EXISTENTES\n");
     int v12 = 30;
@@ -160,6 +175,8 @@ void test_mapeo(){
     printf("clave %i",c4);
     printf(" valor esperado: %d | Devuelve: %d\n",v4,*valor);
     printf("\n");
+
+
 
 }
 
