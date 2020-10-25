@@ -114,7 +114,7 @@ void test_mapeo(){
     printf("Termino de ingresar elementos\n");
 
     int * valor = (int *) m_recuperar(mapeo, &c11);
-    printf(" valor esperado: %d | Devuelve: %d\n",v11,&valor);
+    printf(" valor esperado: %d | Devuelve: %d\n",v11,*valor);
     printf("\n");
     if(valor != NULL)
         printf("Recupero clave 24 : %d\n", *valor);
@@ -148,17 +148,17 @@ void test_mapeo(){
     int v13 = 31;
     int v14 = 69; // ( ͡° ͜ʖ ͡°) 7u7
 
-    valor = (int *)m_insertar(mapeo,c2,v12);
+    valor = (int *)m_insertar(mapeo,&c2,&v12);
     printf("clave %i",c2);
-    printf(" valor esperado: %d | Devolvió: %d\n",v2,*valor);
+    printf(" valor esperado: %d | Devuelve: %d\n",v2,*valor);
     printf("\n");
-    valor = (int *)m_insertar(mapeo,c3,v13);
+    valor = (int *)m_insertar(mapeo,&c3,&v13);
     printf("clave %i",c3);
-    printf(" valor esperado: %d | Devolvió: %d\n",v3,*valor);
+    printf(" valor esperado: %d | Devuelve: %d\n",v3,*valor);
     printf("\n");
-    valor = (int *)m_insertar(mapeo,c4,v14);
+    valor = (int *)m_insertar(mapeo,&c4,&v14);
     printf("clave %i",c4);
-    printf(" valor esperado: %d | Devolvió: %d\n",v4,*valor);
+    printf(" valor esperado: %d | Devuelve: %d\n",v4,*valor);
     printf("\n");
 
 }
