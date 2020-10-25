@@ -28,6 +28,7 @@ void redimensionar(int longitud, tMapeo m){
     for(int i = 0 ; i < longitud ; i++){
         crear_lista(m -> tabla_hash + i);
     }
+    printf("Empiezo a pasar listas");
     for(int i = 0; i < largoAnterior ; i++){
         pos = l_primera(*aux1);
         largo = l_longitud(*aux1);
@@ -37,7 +38,7 @@ void redimensionar(int longitud, tMapeo m){
             if(j < largo - 1)
                 pos = l_siguiente(*aux1, pos);
         }
-        //TODO eliminar la lista
+        //TODO eliminar las listas del arreglo viejo
         aux1++;
     }
 
@@ -49,7 +50,7 @@ tValor m_insertar(tMapeo m, tClave c, tValor v){
     float longitud = ((m)-> longitud_tabla);
     float cantElem = ((m)-> cantidad_elementos);
     if((cantElem / longitud) >= (0.75)){
-        printf(" redimensiono ");
+        printf(" redimensiono AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         redimensionar(m -> longitud_tabla * 2,m);
     }
     printf(" hash: %i\n",( m -> hash_code(c) ));
