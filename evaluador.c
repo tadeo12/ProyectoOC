@@ -14,25 +14,71 @@ int fCompararPalabras(void * a, void * b){
 }
 
 int fHashPalabras(void * a){
-    //toda palabra tiene al menos una letra
     char primerLetra =*(char *)a;
     return (int) a;
 }
 
-void leerPalabras(FILE archivo, tMapeo m){
+void fEliminarPalabra(void * a){
+    //falta
+}
 
+void fEliminarEntero(void * a){
+    //ya ta
+}
+
+void leerPalabras(FILE archivo, tMapeo m){
+    char caracter;
+    char* palabra=malloc(30*sizeof(char));
+    int contador=0;
+    int * aux;
+    int cantidad;
+    while(!feof(archivo)){
+        caracter=fgetc(archivo);
+        if(caracter>32 && caracter<=126 && contador<30){//es un caracter imprimible y distinto a espacio(32)
+            *(palabra+contador)=caracter;
+        }
+        else{
+            if(contador>0){//terminamos de leer una palabra
+                aux=(int *)m_recuperar(m, palabra);
+                if(aux==NULL)
+                    cantidad=0;
+                else
+                    cantidad=*aux;
+                m_insertar(m,palabra,&cantidad);
+                palabra=malloc(30*sizeof(char)); //reservo espacio para nueva palabra
+            }
+        }
+    }
 
 }
 
 void evaluador (char ruta_archivo[]){
     FILE *archivo=fopen(ruta_archivo,"r");
-    if(archivo==NULL)
+    if(archivo==NULL){
+        printf("error, no se pudo leer el archivo");
         return -1;
+    }
     tMapeo mapeo;
     crear_mapeo(&mapeo,20,&fHashPalabras,&fCompararPalabras);
     leerPalabras(archivo,mapeo);
-
-
-
+    printf("archivo leido\n")
+    int i;
+    printf("Menu de operaciones \n");
+    printf("consultar cantidad de apariciones(1) o salir(2) ?\n");
+    scanf("%d",i);
+    char palabra[]; int cantidad; int * aux;
+    while(i!=1){
+        printf("Ingrese la palabra a buscar \n");
+        scanf("%s", palabra);
+        aux=m_recuperar(palabra);
+        if (aux=NULL){
+            printf("la palabra %s no aparece en el archivo \n",palabra);
+        }
+        else
+            printf("la palabra %s aparece %d veces en el archivo \n",palabra,*aux);
+        printf("consultar cantidad de apariciones(1) o salir(2) ?\n");
+        scanf("%d",i);
+    }
+    m_destruir(&mapeo,fEliminarPalabra,fEliminarEntero);
     return 0;
 }
