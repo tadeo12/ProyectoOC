@@ -28,6 +28,15 @@ void fEliminarEntrada(tElemento entrada){
     entrada=NULL;
 }
 
+static void insertarInterno(tMapeo m, tEntrada* entrada){
+    int claveHash = ( m -> hash_code((*entrada) -> clave) ) % ( m -> longitud_tabla );
+    l_insertar(*(m -> tabla_hash + claveHash), l_fin(*(m -> tabla_hash + claveHash)) , *entrada);//l_ultima(*(m -> tabla_hash + claveHash))
+    (m) -> cantidad_elementos++;
+}
+
+void fEliminarNada(tElemento entrada){
+}
+
 void redimensionar(int longitud, tMapeo m){
     tLista* aux1 = (m -> tabla_hash);
     m -> tabla_hash = malloc( longitud * sizeof( tLista ) );
@@ -45,12 +54,14 @@ void redimensionar(int longitud, tMapeo m){
         largo = l_longitud(*(aux1 + i));
         for(int j = 0; j < largo; j++){
             tEntrada entrada = l_recuperar(*(aux1 + i), pos);
-            m_insertar(m, (entrada -> clave), (entrada -> valor));
+            //m_insertar(m, (entrada -> clave), (entrada -> valor));
+            insertarInterno(m, &entrada);
             if(j < largo - 1)
                 pos = l_siguiente(*(aux1 + i), pos);
         }
-        //TODO eliminar las listas del arreglo viejo
     }
+    for(int i = largoAnterior - 1; i <= 0; i--) //Tal vez sea inconsistente
+        l_destruir(aux1 + i, fEliminarNada);
     printf("Termine de redimensionar AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n");
 
 }
