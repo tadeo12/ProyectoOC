@@ -30,22 +30,12 @@ void l_eliminar(tLista l, tPosicion p, void (*fEliminar)(tElemento)){
 }
 
 void l_destruir(tLista * l, void (*fEliminar)(tElemento)){
-    printf("Intento destruir\n");
-    tPosicion celdaActual=(*l);
-    while(celdaActual->siguiente!=NULL){
-        tPosicion celdaAEliminar=celdaActual;
-        celdaActual=celdaActual->siguiente;
-        if(celdaAEliminar->elemento!=NULL)
-            fEliminar(celdaAEliminar->elemento);
-        celdaAEliminar->siguiente=NULL;
-        free(celdaAEliminar);
-        celdaAEliminar=NULL;
+    if(*l != NULL){
+        l_destruir(&((*l) -> siguiente), fEliminar);
+        fEliminar((*l) -> elemento);
+        free(*l);
+        *l = NULL;
     }
-    if(celdaActual->elemento!=NULL)
-        fEliminar(celdaActual->elemento);
-    free(celdaActual);
-    celdaActual=NULL;
-    l=NULL;
 }
 
 tElemento l_recuperar(tLista l, tPosicion p){

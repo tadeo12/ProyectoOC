@@ -22,7 +22,9 @@ void fEliminarPalabra(void * a){
     free(a);
 }
 
+
 void fEliminarInt(void * a){
+
 }
 
 void leerPalabras(FILE * archivo, tMapeo m){
