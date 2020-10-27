@@ -96,5 +96,12 @@ int main (int argc, char *argv[]){
         scanf("%d",&i);
     }
     m_destruir(&mapeo,&fEliminarPalabra,&fEliminarInt);
+
+}
+
+int main (int argc, char *argv[]){
+    if(argc!=2)
+        return ERROR_INVOCACION_PROGRAMA;
+    evaluador(argv[1]);
     return 0;
 }
