@@ -57,7 +57,7 @@ void evaluador (char *ruta_archivo){
     FILE *archivo=fopen(ruta_archivo,"r");
     if(archivo==NULL){
         printf("error, no se pudo leer el archivo");
-        exit(-1);
+        exit(ERROR_APERTURA_ARCHIVO);
     }
     tMapeo mapeo;
     crear_mapeo(&mapeo,20,&fHashPalabras,&fCompararPalabras);
@@ -68,7 +68,7 @@ void evaluador (char *ruta_archivo){
     int i;
     scanf("%d",&i);
     char palabra[30];int * aux;
-    while(i!=1){
+    while(i==1){
         printf("Ingrese la palabra a buscar \n");
         scanf("%s", palabra);
         aux=m_recuperar(mapeo,palabra);
@@ -86,7 +86,7 @@ void evaluador (char *ruta_archivo){
 
 int main (int argc, char *argv[]){
     if(argc!=2)
-        return -2;
+        return ERROR_INVOCACION_PROGRAMA;
     evaluador(argv[1]);
     return 0;
 }
