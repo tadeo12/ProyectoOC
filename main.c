@@ -11,8 +11,6 @@ typedef struct persona{
     char nombre[10];
 } *tPersona;
 
-extern void fEliminarEntero(tElemento i);
-
 void test_lista(){
     tLista lista;
     crear_lista(&lista);
@@ -200,7 +198,7 @@ void test_mapeo(){
 
 }
 
-int main()
+int main1()
 {
     #ifdef LISTA
     //test_lista();

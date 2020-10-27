@@ -13,9 +13,18 @@ int fCompararPalabras(void * a, void * b){
     return strcmp((char *)a,(char *)b);
 }
 
-int fHashPalabras(void * a){
-    char primerLetra =*(char *)a;
-    return (int) primerLetra;
+int fHashPalabras(void * a)
+{
+    char *str = (char*) a;
+    int hash = 5381;
+    int c;
+
+    while (*str){
+        str++;
+        c = *str;
+        hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+    }
+    return hash;
 }
 
 void fEliminarPalabra(void * a){
@@ -53,14 +62,17 @@ void leerPalabras(FILE * archivo, tMapeo m){
 
 }
 
-int evaluador (int argc, char *argv[]){
-    if(argc!=1)
-        return -2;
-    char *ruta_archivo= argv[0];
+int main (int argc, char *argv[]){
+    /*
+    if(argc!=2)
+        return ERROR_INVOCACION_PROGRAMA;
+    char *ruta_archivo= argv[1];
+    */
+    char *ruta_archivo = "test.txt";
     FILE *archivo=fopen(ruta_archivo,"r");
     if(archivo==NULL){
         printf("error, no se pudo leer el archivo");
-        return -1;
+        return ERROR_APERTURA_ARCHIVO;
     }
     tMapeo mapeo;
     crear_mapeo(&mapeo,20,&fHashPalabras,&fCompararPalabras);
@@ -71,7 +83,7 @@ int evaluador (int argc, char *argv[]){
     int i;
     scanf("%d",&i);
     char palabra[30];int * aux;
-    while(i!=1){
+    while(i == 1){
         printf("Ingrese la palabra a buscar \n");
         scanf("%s", palabra);
         aux=m_recuperar(mapeo,palabra);
