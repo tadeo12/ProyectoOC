@@ -82,7 +82,7 @@ int comparador(void * a, void * b){
     return *((int*) a) - *((int*) b);
 }
 
-void fEliminarEntero(tElemento i){
+void fEliminarInt(tElemento i){
 
 }
 

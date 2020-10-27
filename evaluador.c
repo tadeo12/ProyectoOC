@@ -25,7 +25,7 @@ void fEliminarPalabra(void * a){
 void fEliminarEntero(void * a){
 }
 
-void leerPalabras(FILE archivo, tMapeo m){
+void leerPalabras(FILE * archivo, tMapeo m){
     char caracter;
     char* palabra=malloc(30*sizeof(char));
     int contador=0;
@@ -60,16 +60,16 @@ void evaluador (char ruta_archivo[]){
     tMapeo mapeo;
     crear_mapeo(&mapeo,20,&fHashPalabras,&fCompararPalabras);
     leerPalabras(archivo,mapeo);
-    printf("Archivo leido\n")
+    printf("Archivo leido\n");
     printf("Menu de operaciones \n");
     printf("consultar cantidad de apariciones(1) o salir(2) ?\n");
     int i;
     scanf("%d",i);
-    char palabra[]; int cantidad; int * aux;
+    char palabra[30]; int cantidad; int * aux;
     while(i!=1){
         printf("Ingrese la palabra a buscar \n");
         scanf("%s", palabra);
-        aux=m_recuperar(palabra);
+        aux=m_recuperar(mapeo,palabra);
         if (aux=NULL){
             printf("la palabra %s no aparece en el archivo \n",palabra);
         }
