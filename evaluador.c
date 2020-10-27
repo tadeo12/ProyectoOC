@@ -19,11 +19,10 @@ int fHashPalabras(void * a){
 }
 
 void fEliminarPalabra(void * a){
-    //falta
+    free(a);
 }
 
 void fEliminarEntero(void * a){
-    //ya ta
 }
 
 void leerPalabras(FILE archivo, tMapeo m){
@@ -61,10 +60,10 @@ void evaluador (char ruta_archivo[]){
     tMapeo mapeo;
     crear_mapeo(&mapeo,20,&fHashPalabras,&fCompararPalabras);
     leerPalabras(archivo,mapeo);
-    printf("archivo leido\n")
-    int i;
+    printf("Archivo leido\n")
     printf("Menu de operaciones \n");
     printf("consultar cantidad de apariciones(1) o salir(2) ?\n");
+    int i;
     scanf("%d",i);
     char palabra[]; int cantidad; int * aux;
     while(i!=1){
@@ -79,6 +78,6 @@ void evaluador (char ruta_archivo[]){
         printf("consultar cantidad de apariciones(1) o salir(2) ?\n");
         scanf("%d",i);
     }
-    m_destruir(&mapeo,fEliminarPalabra,fEliminarEntero);
+    m_destruir(&mapeo,&fEliminarPalabra,&fEliminarEntero);
     return 0;
 }
