@@ -11,6 +11,8 @@ typedef struct persona{
     char nombre[10];
 } *tPersona;
 
+extern void fEliminarEntero(tElemento i);
+
 void test_lista(){
     tLista lista;
     crear_lista(&lista);
@@ -33,7 +35,6 @@ void test_lista(){
 }
 
 void asesinar(tElemento p){
-    free(p);
 }
 
 
@@ -82,13 +83,11 @@ int comparador(void * a, void * b){
     return *((int*) a) - *((int*) b);
 }
 
-void fEliminarInt(tElemento i){
-
-}
-
 void test_mapeo(){
     tMapeo mapeo;
     printf("Creo mapeo\n");
+    crear_mapeo(&mapeo, 10, &funcionHash, &comparador);
+    m_destruir(&mapeo, &fEliminarEntero, &fEliminarEntero);
     crear_mapeo(&mapeo, 10, &funcionHash, &comparador);
 
     int c1 = 3, v1 = 1;
@@ -192,7 +191,7 @@ void test_mapeo(){
     printf(" valor esperado: %d | Devuelve: %d\n",v14,*valor);
     printf("\n");
 
-
+    m_destruir(&mapeo, &fEliminarEntero, &fEliminarEntero);
 
 }
 
