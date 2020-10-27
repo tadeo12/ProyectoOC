@@ -53,14 +53,11 @@ void leerPalabras(FILE * archivo, tMapeo m){
 
 }
 
-int evaluador (int argc, char *argv[]){
-    if(argc!=1)
-        return -2;
-    char *ruta_archivo= argv[0];
+void evaluador (char *ruta_archivo){
     FILE *archivo=fopen(ruta_archivo,"r");
     if(archivo==NULL){
         printf("error, no se pudo leer el archivo");
-        return -1;
+        exit(-1);
     }
     tMapeo mapeo;
     crear_mapeo(&mapeo,20,&fHashPalabras,&fCompararPalabras);
@@ -84,5 +81,12 @@ int evaluador (int argc, char *argv[]){
         scanf("%d",&i);
     }
     m_destruir(&mapeo,&fEliminarPalabra,&fEliminarInt);
+
+}
+
+int main (int argc, char *argv[]){
+    if(argc!=2)
+        return -2;
+    evaluador(argv[1]);
     return 0;
 }

@@ -200,7 +200,7 @@ void test_mapeo(){
 
 }
 
-int main()
+int main1()
 {
     #ifdef LISTA
     //test_lista();
