@@ -46,15 +46,28 @@ void leerPalabras(FILE * archivo, tMapeo m){
         caracter=fgetc(archivo);
         if(caracter>32 && caracter<=126 && contador<30){//es un caracter imprimible y distinto a espacio(32)
             *(palabra+contador)=caracter;
+            contador++;
         }
         else{
+            printf("contador 4 devuelve %i\n",contador);
             if(contador>0){//terminamos de leer una palabra
+                contador = 0;
                 aux=(int *)m_recuperar(m, palabra);
+
+                printf("aux  %d\n",((aux)==NULL));
+               // printf("aux: %d",(*aux));
                 if(aux==NULL)
-                    cantidad=0;
+                    cantidad=1;
                 else
-                    cantidad=*aux;
-                m_insertar(m,palabra,&cantidad);
+                    cantidad=(*aux) + 1;
+                printf("cantidad  %d\n",cantidad);
+                int cont=0;
+                printf("palabra %c\n",(*palabra));
+                printf("palabra %c\n",*(palabra+1));
+                printf("palabra %c\n",*(palabra+2));
+                printf("palabra %c\n",*(palabra+3));
+                int v = m_insertar(m,palabra,&cantidad);
+                printf("v %i \n",v);
                 palabra=malloc(30*sizeof(char)); //reservo espacio para nueva palabra
             }
         }
@@ -68,8 +81,8 @@ int main (int argc, char *argv[]){
         return ERROR_INVOCACION_PROGRAMA;
     char *ruta_archivo= argv[1];
     */
-    char *ruta_archivo = "test.txt";
-    FILE *archivo=fopen(ruta_archivo,"r");
+    char *ruta_archivo = "t.txt";
+    FILE * archivo = fopen(ruta_archivo,"r");
     if(archivo==NULL){
         printf("error, no se pudo leer el archivo");
         return ERROR_APERTURA_ARCHIVO;
@@ -96,12 +109,4 @@ int main (int argc, char *argv[]){
         scanf("%d",&i);
     }
     m_destruir(&mapeo,&fEliminarPalabra,&fEliminarInt);
-
-}
-
-int main (int argc, char *argv[]){
-    if(argc!=2)
-        return ERROR_INVOCACION_PROGRAMA;
-    evaluador(argv[1]);
-    return 0;
 }
