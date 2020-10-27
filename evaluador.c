@@ -15,14 +15,14 @@ int fCompararPalabras(void * a, void * b){
 
 int fHashPalabras(void * a){
     char primerLetra =*(char *)a;
-    return (int) a;
+    return (int) primerLetra;
 }
 
 void fEliminarPalabra(void * a){
     free(a);
 }
 
-void fEliminarEntero(void * a){
+void fEliminarInt(void * a){
 }
 
 void leerPalabras(FILE * archivo, tMapeo m){
@@ -51,7 +51,10 @@ void leerPalabras(FILE * archivo, tMapeo m){
 
 }
 
-void evaluador (char ruta_archivo[]){
+int evaluador (int argc, char *argv[]){
+    if(argc!=1)
+        return -2;
+    char *ruta_archivo= argv[0];
     FILE *archivo=fopen(ruta_archivo,"r");
     if(archivo==NULL){
         printf("error, no se pudo leer el archivo");
@@ -64,20 +67,20 @@ void evaluador (char ruta_archivo[]){
     printf("Menu de operaciones \n");
     printf("consultar cantidad de apariciones(1) o salir(2) ?\n");
     int i;
-    scanf("%d",i);
-    char palabra[30]; int cantidad; int * aux;
+    scanf("%d",&i);
+    char palabra[30];int * aux;
     while(i!=1){
         printf("Ingrese la palabra a buscar \n");
         scanf("%s", palabra);
         aux=m_recuperar(mapeo,palabra);
-        if (aux=NULL){
+        if (aux==NULL){
             printf("la palabra %s no aparece en el archivo \n",palabra);
         }
         else
             printf("la palabra %s aparece %d veces en el archivo \n",palabra,*aux);
         printf("consultar cantidad de apariciones(1) o salir(2) ?\n");
-        scanf("%d",i);
+        scanf("%d",&i);
     }
-    m_destruir(&mapeo,&fEliminarPalabra,&fEliminarEntero);
+    m_destruir(&mapeo,&fEliminarPalabra,&fEliminarInt);
     return 0;
 }
