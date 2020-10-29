@@ -1,0 +1,31 @@
+# depslib dependency file v1.0
+1603922725 source:c:\users\laval\desktop\proyectooc\lista.c
+	<stdio.h>
+	<stdlib.h>
+	"lista.h"
+
+1602891499 c:\users\laval\desktop\proyectooc\lista.h
+
+1603830563 source:c:\users\laval\desktop\proyectooc\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lista.h"
+	"mapeo.h"
+
+1603232640 c:\users\laval\desktop\proyectooc\mapeo.h
+	"lista.h"
+
+1604003666 source:c:\users\laval\desktop\proyectooc\mapeo.c
+	<stdio.h>
+	<stdlib.h>
+	"mapeo.h"
+	"lista.h"
+
+1604003928 source:c:\users\laval\desktop\proyectooc\evaluador.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lista.h"
+	"mapeo.h"
+

@@ -65,21 +65,28 @@ void redimensionar(int longitud, tMapeo m){
 
 tValor m_insertar(tMapeo m, tClave c, tValor v){
     tValor toReturn = NULL;
-
-    float longitud = ((m)-> longitud_tabla);
-    float cantElem = ((m)-> cantidad_elementos);
+    printf("pase m_insertar mapeo\n");
+    int longitud = ((m)-> longitud_tabla);
+    printf("longitud hola insertar xd : %i \n",longitud);
+    int cantElem = ((m)-> cantidad_elementos);
+    printf("cant elementos 0 ||| tiene: %i\n",cantElem);
     if((cantElem / longitud) >= (0.75)){
         redimensionar(m -> longitud_tabla * 2,m);
     }
+    printf("redimensionar lo pase como champion \n");
     int claveHash = ( m -> hash_code(c) ) % ( m -> longitud_tabla );
+    printf("claveHash en mapeo %i \n",claveHash);
     int encontre = 0;
     tLista lista = *(m -> tabla_hash + claveHash);
+    printf("pase la lista \n");
     int largo = l_longitud(lista);
+    printf("largo lista bucket mapeo %i\n",largo);
     tPosicion actual = l_primera(lista);
     tEntrada entrada;
     for(int i = 0; i < largo && !encontre; i++){
         entrada = l_recuperar(lista, actual);
-        if( m -> comparador( &(entrada -> clave), &c) == 0){
+        printf("");
+        if( m -> comparador( (entrada -> clave), c) == 0){
             encontre = 1;
             toReturn = entrada -> valor;
             entrada -> valor = v;
@@ -87,14 +94,21 @@ tValor m_insertar(tMapeo m, tClave c, tValor v){
         if(i < longitud - 1)
             actual = l_siguiente(lista, actual);
     }
-
+    printf("encontre insertar  %i \n",encontre);
     if(!encontre){
-        tEntrada entrada = malloc(sizeof(tEntrada));
+        tEntrada entrada = malloc(sizeof(struct entrada));
         entrada -> clave = c;
+        //printf("clave mapeo insertar no encontre %c\n",*((char**)(entrada->clave)));
+        //printf("valor mapeo insertar no encontre %i\n",*((int**)(entrada->valor)));
         entrada -> valor = v;
+        printf("casi termino\n");
         l_insertar(*(m -> tabla_hash + claveHash), l_fin(*(m -> tabla_hash + claveHash)) , entrada);//l_ultima(*(m -> tabla_hash + claveHash))
-
+        printf("inserte\n");
         (m) -> cantidad_elementos++;
+        printf("deberia de ser 1 ||| es : m cant elem %i\n",((m) -> cantidad_elementos++));
+        printf("\n");
+        printf("\n");
+        printf("\n");
     }
     return toReturn;
 }
@@ -113,7 +127,7 @@ void m_eliminar(tMapeo m, tClave c, void (*fEliminarC)(void *), void (*fEliminar
     int encontre = 0;
     for(int i = 0; i < largo && !encontre; i++){
         entrada = l_recuperar(bucket, pos);
-        if( m -> comparador( &(entrada -> clave), &c) == 0){
+        if( m -> comparador( (entrada -> clave), c) == 0){
             encontre = 1;
             funcionEliminarClave=fEliminarC;
             funcionEliminarValor=fEliminarV;
@@ -138,23 +152,35 @@ void m_destruir(tMapeo * m, void (*fEliminarC)(void *), void (*fEliminarV)(void 
 }
 
 tValor m_recuperar(tMapeo m, tClave c){
-    int claveHash = m -> hash_code(c) % m -> longitud_tabla;
+    printf("estoy en mapeo m_recuperar \n");
+    printf("longitud mapeo %i\n",( m -> longitud_tabla ));
+    int claveHash = (  m -> hash_code(c) ) % ( m -> longitud_tabla );
+    printf("CLAVEHASH en mapeo m_recuperar %i\n",claveHash);
     tLista bucket = *((m -> tabla_hash) + claveHash);
+    printf("pase la lista en m_recuperar en mapeo\n");
     tPosicion p = l_primera(bucket);
+    printf("pase la tPosicion en m_recuperar en mapeo\n");
     tValor aRetornar = NULL;
     tEntrada entrada;
 
     int largo = l_longitud(bucket), encontre = 0;
+    printf("largo %i\n",largo);
 
     for(int i = 0; i < largo && !encontre; i++){
         entrada = l_recuperar(bucket, p);
-        if( m -> comparador( &(entrada -> clave), &c) == 0){
+        printf("pase entrada en for en m_recuperar en mapeo\n");
+        if(( m -> comparador( (entrada -> clave), c) ) == 0){
             encontre = 1;
             aRetornar = entrada -> valor;
+            printf("ENCONTRE ES 1\n");
         }
-        if(i < largo - 1)
+        printf("holis\n");
+        //if(i < largo - 1)
             p = l_siguiente(bucket, p);
     }
-
+    if(aRetornar!=NULL){
+         int * n = (int *) (aRetornar);
+        printf("valor a retornar %d \n", (*n));
+    }else printf("nullo a retornar recuperar \n");
     return aRetornar;
 }
