@@ -66,7 +66,7 @@ void redimensionar(int longitud, tMapeo m){
 tValor m_insertar(tMapeo m, tClave c, tValor v){
 
     tValor toReturn = NULL;
-    printf("valor en insertar: %d \n", *(int *)v);
+    printf("INSERTAR valor parametro en insertar: %d \n", *(int *)v);
     int longitud = ((m)-> longitud_tabla);
     printf("longitud insertar: %d \n",longitud);
     int cantElem = ((m)-> cantidad_elementos);
@@ -85,7 +85,8 @@ tValor m_insertar(tMapeo m, tClave c, tValor v){
     for(int i = 0; i < largo && !encontre; i++){
         printf("toy en for \n");
         entrada = l_recuperar(lista, actual);
-        if( m -> comparador( (entrada -> clave), c) == 0){
+        //m->hash_code(entrada -> clave);
+        if(( m -> comparador( (entrada -> clave), c) )== 0){
             encontre = 1;
             toReturn = entrada -> valor;//toReturn= *(entrada).valor
             entrada -> valor = v; //*(entrada).valor=v
@@ -101,7 +102,7 @@ tValor m_insertar(tMapeo m, tClave c, tValor v){
     }
 
     if(!encontre){
-        tEntrada entrada = malloc(sizeof(tEntrada));
+        tEntrada entrada = malloc(sizeof(struct entrada));
         //printf("clave antes de guardar %s \n",*(char **)c);
         entrada -> clave = c;
         entrada -> valor = v;
@@ -156,7 +157,7 @@ void m_destruir(tMapeo * m, void (*fEliminarC)(void *), void (*fEliminarV)(void 
 
 tValor m_recuperar(tMapeo m, tClave c){
 
-    printf("clave parametro %s \n",*(char **)c);
+    printf("RECUPERAR clave parametro %s \n",(char *)c);
     int claveHash = m -> hash_code(c) % m -> longitud_tabla;
     tLista bucket = *((m -> tabla_hash) + claveHash);
     tPosicion p = l_primera(bucket);
@@ -172,18 +173,20 @@ tValor m_recuperar(tMapeo m, tClave c){
             printf("comparador dio 0\n");
             encontre = 1;
             aRetornar = entrada -> valor;
-            //printf("clave guardada %s clave nueva %s \n",*(char **)(entrada -> clave),*(char **)c);
-            //printf("valorEntrada %d \n",*(int *)(entrada -> valor));
+            printf("clave guardada %s clave buscada %s \n",(char *)(entrada -> clave),(char *)c);
+            printf("valorEntrada %d \n",*(int *)(entrada -> valor));
         }
         if(i < largo - 1)
             p = l_siguiente(bucket, p);
     }
     if(aRetornar!=NULL){
-        int n= *(int *)aRetornar;
-        printf("valor a retornar %d \n", n);
+        printf("entre if \n");
+
+        int* n = (int*) aRetornar;
+        printf("valor a retornar %d \n", *n);
     }
     else
        printf("retorno null \n");
-
+    printf("fin retornar \n");
     return aRetornar;
 }
