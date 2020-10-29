@@ -63,7 +63,7 @@ int main(int argc, char *argv[]){
     char * ruta_archivo, * palabra;
     FILE * archivo;
     if(argc!=2){
-        printf("ERROR: Cantidad de argumentos");
+        printf("ERROR: Cantidad de argumentos equivocado");
         return ERROR_INVOCACION_PROGRAMA;
     }
     ruta_archivo = argv[1];
