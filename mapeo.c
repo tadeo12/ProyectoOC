@@ -20,7 +20,7 @@ void crear_mapeo(tMapeo * m, int ci, int (*fHash)(void *), int (*fComparacion)(v
         crear_lista((*m) -> tabla_hash + i);//creo cada bucket
 }
 
-void fEliminarEntrada(tElemento entrada){//
+void fEliminarEntrada(tElemento entrada){
     tEntrada entry=(tEntrada) entrada;
     funcionEliminarClave(entry->clave);//elimino la clave de la entrada
     funcionEliminarValor(entry->valor);//enlimino el valor de la entrada
@@ -38,7 +38,7 @@ void fEliminarNada(tElemento entrada){      //Método para que no elimina las ent
 }
 
 void redimensionar(int longitud, tMapeo m){
-    tLista* aux1 = (m -> tabla_hash);//
+    tLista* aux1 = (m -> tabla_hash);
 
     m -> tabla_hash = malloc( longitud * sizeof( struct celda ) );
     tPosicion pos;
