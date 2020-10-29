@@ -11,13 +11,13 @@ void crear_mapeo(tMapeo * m, int ci, int (*fHash)(void *), int (*fComparacion)(v
     *m = malloc(sizeof(struct mapeo));
     if(*m == NULL)
         exit(MAP_ERROR_MEMORIA);
-    (*m) -> longitud_tabla = (10 < ci ? ci : 10);                               //La longitud de la tabla es inicialmente el mayor entre 10 y ci
+    (*m) -> longitud_tabla = (10 < ci ? ci : 10);
     (*m) -> cantidad_elementos = 0;
     (*m) -> hash_code = fHash;
     (*m) -> comparador = fComparacion;
-    (*m) -> tabla_hash = malloc( ((*m) -> longitud_tabla) * sizeof(tLista));    //Creo los buckets
+    (*m) -> tabla_hash = malloc( ((*m) -> longitud_tabla) * sizeof(tLista));
     for(int i = 0; i < (*m) -> longitud_tabla; i++)
-        crear_lista((*m) -> tabla_hash + i);                                    //Creo las listas en los buckets
+        crear_lista((*m) -> tabla_hash + i);
 }
 
 void fEliminarEntrada(tElemento entrada){
@@ -30,7 +30,7 @@ void fEliminarEntrada(tElemento entrada){
 
 static void insertarInterno(tMapeo m, tEntrada* entrada){
     int claveHash = ( m -> hash_code((*entrada) -> clave) ) % ( m -> longitud_tabla );
-    l_insertar(*(m -> tabla_hash + claveHash), l_fin(*(m -> tabla_hash + claveHash)) , *entrada);//l_ultima(*(m -> tabla_hash + claveHash))
+    l_insertar(*(m -> tabla_hash + claveHash), l_fin(*(m -> tabla_hash + claveHash)) , *entrada);
     (m) -> cantidad_elementos++;
 }
 
@@ -64,10 +64,10 @@ void redimensionar(int longitud, tMapeo m){
 }
 
 tValor m_insertar(tMapeo m, tClave c, tValor v){
-    tValor toReturn = NULL;
 
-    float longitud = ((m)-> longitud_tabla);
-    float cantElem = ((m)-> cantidad_elementos);
+    tValor toReturn = NULL;
+    int longitud = ((m)-> longitud_tabla);
+    int cantElem = ((m)-> cantidad_elementos);
     if((cantElem / longitud) >= (0.75)){
         redimensionar(m -> longitud_tabla * 2,m);
     }
@@ -79,7 +79,7 @@ tValor m_insertar(tMapeo m, tClave c, tValor v){
     tEntrada entrada;
     for(int i = 0; i < largo && !encontre; i++){
         entrada = l_recuperar(lista, actual);
-        if( m -> comparador( &(entrada -> clave), &c) == 0){
+        if(( m -> comparador( (entrada -> clave), c) )== 0){
             encontre = 1;
             toReturn = entrada -> valor;
             entrada -> valor = v;
@@ -89,17 +89,15 @@ tValor m_insertar(tMapeo m, tClave c, tValor v){
     }
 
     if(!encontre){
-        tEntrada entrada = malloc(sizeof(tEntrada));
+        tEntrada entrada = malloc(sizeof(struct entrada));
         entrada -> clave = c;
         entrada -> valor = v;
-        l_insertar(*(m -> tabla_hash + claveHash), l_fin(*(m -> tabla_hash + claveHash)) , entrada);//l_ultima(*(m -> tabla_hash + claveHash))
+        l_insertar(*(m -> tabla_hash + claveHash), l_fin(*(m -> tabla_hash + claveHash)) , entrada);
 
         (m) -> cantidad_elementos++;
     }
     return toReturn;
 }
-
-
 
 
 
@@ -138,6 +136,7 @@ void m_destruir(tMapeo * m, void (*fEliminarC)(void *), void (*fEliminarV)(void 
 }
 
 tValor m_recuperar(tMapeo m, tClave c){
+
     int claveHash = m -> hash_code(c) % m -> longitud_tabla;
     tLista bucket = *((m -> tabla_hash) + claveHash);
     tPosicion p = l_primera(bucket);
@@ -145,16 +144,17 @@ tValor m_recuperar(tMapeo m, tClave c){
     tEntrada entrada;
 
     int largo = l_longitud(bucket), encontre = 0;
-
     for(int i = 0; i < largo && !encontre; i++){
         entrada = l_recuperar(bucket, p);
-        if( m -> comparador( &(entrada -> clave), &c) == 0){
+        if( m -> comparador( (entrada -> clave), c) == 0){
             encontre = 1;
             aRetornar = entrada -> valor;
         }
         if(i < largo - 1)
             p = l_siguiente(bucket, p);
     }
-
+    if(aRetornar!=NULL){
+        int* n = (int*) aRetornar;
+    }
     return aRetornar;
 }
