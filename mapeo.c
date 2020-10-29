@@ -11,34 +11,34 @@ void crear_mapeo(tMapeo * m, int ci, int (*fHash)(void *), int (*fComparacion)(v
     *m = malloc(sizeof(struct mapeo));
     if(*m == NULL)
         exit(MAP_ERROR_MEMORIA);
-    (*m) -> longitud_tabla = (10 < ci ? ci : 10);
+    (*m) -> longitud_tabla = (10 < ci ? ci : 10);//la longitud minima es 10
     (*m) -> cantidad_elementos = 0;
     (*m) -> hash_code = fHash;
     (*m) -> comparador = fComparacion;
     (*m) -> tabla_hash = malloc( ((*m) -> longitud_tabla) * sizeof(struct celda));
     for(int i = 0; i < (*m) -> longitud_tabla; i++)
-        crear_lista((*m) -> tabla_hash + i);
+        crear_lista((*m) -> tabla_hash + i);//creo cada bucket
 }
 
-void fEliminarEntrada(tElemento entrada){
+void fEliminarEntrada(tElemento entrada){//
     tEntrada entry=(tEntrada) entrada;
-    funcionEliminarClave(entry->clave);
-    funcionEliminarValor(entry->valor);
+    funcionEliminarClave(entry->clave);//elimino la clave de la entrada
+    funcionEliminarValor(entry->valor);//enlimino el valor de la entrada
     free(entrada);
     entrada=NULL;
 }
 
 static void insertarInterno(tMapeo m, tEntrada* entrada){
-    int claveHash = ( m -> hash_code((*entrada) -> clave) ) % ( m -> longitud_tabla );
-    l_insertar(*(m -> tabla_hash + claveHash), l_fin(*(m -> tabla_hash + claveHash)) , *entrada);
-    (m) -> cantidad_elementos++;
+    int claveHash = ( m -> hash_code((*entrada) -> clave) ) % ( m -> longitud_tabla );//obtengo el hashCode
+    l_insertar(*(m -> tabla_hash + claveHash), l_fin(*(m -> tabla_hash + claveHash)) , *entrada);//inserto al final de bucket
+    (m) -> cantidad_elementos++;//aumento la cantidad de elements
 }
 
 void fEliminarNada(tElemento entrada){      //Método para que no elimina las entradas, lo usa el redimencsionar
 }
 
 void redimensionar(int longitud, tMapeo m){
-    tLista* aux1 = (m -> tabla_hash);
+    tLista* aux1 = (m -> tabla_hash);//
 
     m -> tabla_hash = malloc( longitud * sizeof( struct celda ) );
     tPosicion pos;
@@ -46,13 +46,13 @@ void redimensionar(int longitud, tMapeo m){
     m -> longitud_tabla = longitud;
     m -> cantidad_elementos = 0;
     for(int i = 0 ; i < longitud ; i++){
-        crear_lista(m -> tabla_hash + i);
+        crear_lista(m -> tabla_hash + i);//creo los nuevos buckets
     }
     for(int i = 0; i < largoAnterior ; i++){
-        pos = l_primera(*(aux1 + i));
-        largo = l_longitud(*(aux1 + i));
+        pos = l_primera(*(aux1 + i));//guardo la primera posicion de cada bucket (lista)
+        largo = l_longitud(*(aux1 + i));//obtengo la longitud del bucket
         for(int j = 0; j < largo; j++){
-            tEntrada entrada = l_recuperar(*(aux1 + i), pos);
+            tEntrada entrada = l_recuperar(*(aux1 + i), pos);//obtengo la entrada en cada bucket
             insertarInterno(m, &entrada);
             if(j < largo - 1)
                 pos = l_siguiente(*(aux1 + i), pos);
@@ -152,3 +152,4 @@ tValor m_recuperar(tMapeo m, tClave c){
     }
     return aRetornar;
 }
+

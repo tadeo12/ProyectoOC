@@ -95,4 +95,3 @@ int main(int argc, char *argv[]){
     m_destruir(&mapeo,&fEliminarPalabra,&fEliminarInt);
     return 0;
 }
-
