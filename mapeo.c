@@ -9,8 +9,10 @@ void (*funcionEliminarValor)(void *)= NULL;
 
 void crear_mapeo(tMapeo * m, int ci, int (*fHash)(void *), int (*fComparacion)(void *, void *)){
     *m = malloc(sizeof(struct mapeo));
-    if(*m == NULL)
+    if(*m == NULL){
+        printf("ERROR: No se pudo reservar espacio en memoria.");
         exit(MAP_ERROR_MEMORIA);
+    }
     (*m) -> longitud_tabla = (10 < ci ? ci : 10);//la longitud minima es 10
     (*m) -> cantidad_elementos = 0;
     (*m) -> hash_code = fHash;
@@ -87,7 +89,11 @@ tValor m_insertar(tMapeo m, tClave c, tValor v){
     }
 
     if(!encontre){
-        tEntrada entrada = malloc(sizeof(struct entrada));
+        entrada = malloc(sizeof(struct entrada));
+        if(entrada == NULL){
+            printf("ERROR: No se pudo reservar memoria.");
+            exit(MAP_ERROR_MEMORIA);
+        }
         entrada -> clave = c;
         entrada -> valor = v;
         l_insertar(*(m -> tabla_hash + claveHash), l_fin(*(m -> tabla_hash + claveHash)) , entrada);

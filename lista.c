@@ -4,8 +4,10 @@
 
 void crear_lista(tLista * l){
     *l = malloc(sizeof(struct celda));
-    if(*l==NULL)
+    if(*l==NULL){
+        printf("ERROR: No se pudo reservar espacio en memoria.");
         exit(LST_ERROR_MEMORIA);
+    }
     (*l) -> elemento=NULL;
     (*l) -> siguiente=NULL;
     //se crea una lista vacia
@@ -14,16 +16,20 @@ void crear_lista(tLista * l){
 void l_insertar(tLista l, tPosicion p, tElemento e){
     tPosicion aux = p -> siguiente;//guardo la posicion donde voy a insertar
     p -> siguiente = malloc(sizeof(struct celda));
-    if(p -> siguiente == NULL)
+    if(p -> siguiente == NULL){
+        printf("ERROR: No se pudo reservar espacio en memoria.");
         exit(LST_ERROR_MEMORIA);
+    }
     p -> siguiente -> elemento = e;//asigno el elemento
     p -> siguiente -> siguiente = aux;
 }
 
 void l_eliminar(tLista l, tPosicion p, void (*fEliminar)(tElemento)){
     tPosicion celdaAEliminar = p->siguiente;//
-    if(celdaAEliminar == NULL)
+    if(celdaAEliminar == NULL){
+        printf("ERROR: Posicion invalida.");
         exit(LST_POSICION_INVALIDA);
+    }
     p->siguiente=celdaAEliminar->siguiente;//a la posicion anterior le asigno el elemento en la posicion siguiente a la que quiero eliminar
     fEliminar(celdaAEliminar->elemento);
     free(celdaAEliminar);//libero espacio en memoria
@@ -40,8 +46,10 @@ void l_destruir(tLista * l, void (*fEliminar)(tElemento)){
 }
 
 tElemento l_recuperar(tLista l, tPosicion p){
-    if(p->siguiente==NULL)
+    if(p->siguiente==NULL){
+        printf("ERROR: Posicion invalida.");
         exit(LST_POSICION_INVALIDA);
+    }
     return p->siguiente->elemento;//retorna el elemento
 }
 
@@ -60,15 +68,19 @@ tPosicion l_ultima(tLista l){
 }
 
 tPosicion l_siguiente(tLista l, tPosicion p){
-    if(p->siguiente==NULL)
+    if(p->siguiente==NULL){
+        printf("ERROR: No hay siguiente.");
         exit(LST_NO_EXISTE_SIGUIENTE);
+    }
     return p->siguiente;
 }
 
 tPosicion l_anterior(tLista l, tPosicion p){
     tPosicion celdaActual = l;//guardo la primera posicion para buscar
-    if(l == p)
+    if(l == p){
+        printf("ERROR: No hay anterior.");
         exit(LST_NO_EXISTE_ANTERIOR);
+    }
     while(celdaActual -> siguiente != p){//mientras la celdaSiguiente de la actual no sea
                                         //la que estoy buscando
         celdaActual = celdaActual -> siguiente;

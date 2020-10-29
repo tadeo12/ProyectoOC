@@ -74,7 +74,7 @@ int main(int argc, char *argv[]){
         return ERROR_APERTURA_ARCHIVO;
     }
     crear_mapeo(&mapeo,20,&fHashPalabras,&fCompararPalabras);
-    leerPalabras(archivo,mapeo);
+    leerPalabras(archivo,mapeo);                                //Leo las palabras del archivo
     printf("Archivo leido\n");
     printf("Menu de operaciones \n");
     printf("Consultar cantidad de apariciones(1) o salir(2) ?\n");
