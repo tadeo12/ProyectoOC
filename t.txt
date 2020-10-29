@@ -1,1 +1,7 @@
+<<<<<<< HEAD
 hola hola hola tarde
+=======
+a b c d e f g h i j k l m n o p f q r s t f f u v w     x y z1
+hola ff hola hola gg
+gg gg
+>>>>>>> 2a93be2a64fe4aad9fa81a57df039a02f60113d6

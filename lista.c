@@ -8,40 +8,41 @@ void crear_lista(tLista * l){
         exit(LST_ERROR_MEMORIA);
     (*l) -> elemento=NULL;
     (*l) -> siguiente=NULL;
+    //se crea una lista vacia
 }
 
 void l_insertar(tLista l, tPosicion p, tElemento e){
-    tPosicion aux = p -> siguiente;
+    tPosicion aux = p -> siguiente;//guardo la posicion donde voy a insertar
     p -> siguiente = malloc(sizeof(struct celda));
     if(p -> siguiente == NULL)
         exit(LST_ERROR_MEMORIA);
-    p -> siguiente -> elemento = e;
+    p -> siguiente -> elemento = e;//asigno el elemento
     p -> siguiente -> siguiente = aux;
 }
 
 void l_eliminar(tLista l, tPosicion p, void (*fEliminar)(tElemento)){
-    tPosicion celdaAEliminar = p->siguiente;
+    tPosicion celdaAEliminar = p->siguiente;//
     if(celdaAEliminar == NULL)
         exit(LST_POSICION_INVALIDA);
-    p->siguiente=celdaAEliminar->siguiente;
+    p->siguiente=celdaAEliminar->siguiente;//a la posicion anterior le asigno el elemento en la posicion siguiente a la que quiero eliminar
     fEliminar(celdaAEliminar->elemento);
-    free(celdaAEliminar);
+    free(celdaAEliminar);//libero espacio en memoria
     celdaAEliminar=NULL;
 }
 
 void l_destruir(tLista * l, void (*fEliminar)(tElemento)){
-    if(*l != NULL){
-        l_destruir(&((*l) -> siguiente), fEliminar);
-        fEliminar((*l) -> elemento);
+    if(*l != NULL){// si el primer elemento de la lista no es nulo
+        l_destruir(&((*l) -> siguiente), fEliminar);//destruyo el siguiente
+        fEliminar((*l) -> elemento);//Elimino elemento
         free(*l);
-        *l = NULL;
+        *l = NULL;//desreferencio el puntero
     }
 }
 
 tElemento l_recuperar(tLista l, tPosicion p){
     if(p->siguiente==NULL)
         exit(LST_POSICION_INVALIDA);
-    return p->siguiente->elemento;
+    return p->siguiente->elemento;//retorna el elemento
 }
 
 tPosicion l_primera(tLista l){
@@ -51,9 +52,10 @@ tPosicion l_primera(tLista l){
 tPosicion l_ultima(tLista l){
     tPosicion celdaActual = l;
     if(celdaActual -> siguiente != NULL)
-        while(celdaActual -> siguiente -> siguiente != NULL){
+        while(celdaActual -> siguiente -> siguiente != NULL){//me fijo si el siguiente de la pos actual es nulo para saber
+                                                            //si llegue al final de la lista
             celdaActual = celdaActual -> siguiente;
-        }
+        }//recupero la ultima posicion
     return celdaActual;
 }
 
@@ -64,10 +66,11 @@ tPosicion l_siguiente(tLista l, tPosicion p){
 }
 
 tPosicion l_anterior(tLista l, tPosicion p){
+    tPosicion celdaActual = l;//guardo la primera posicion para buscar
     if(l == p)
         exit(LST_NO_EXISTE_ANTERIOR);
-    tPosicion celdaActual = l;
-    while(celdaActual -> siguiente != p){
+    while(celdaActual -> siguiente != p){//mientras la celdaSiguiente de la actual no sea
+                                        //la que estoy buscando
         celdaActual = celdaActual -> siguiente;
     }
     return celdaActual;
@@ -75,18 +78,18 @@ tPosicion l_anterior(tLista l, tPosicion p){
 
 int l_longitud(tLista l){
     int result = 0;
-    tPosicion celdaActual = l;
-    while(celdaActual -> siguiente != NULL){
+    tPosicion celdaActual = l;//guardo la primera celda
+    while(celdaActual -> siguiente != NULL){//
         celdaActual = celdaActual -> siguiente;
-        result++;
+        result++;//cuento la cantidad de pelementos que hay en la lista
     }
     return result;
 }
 
 tPosicion l_fin(tLista l){
     tPosicion tP = l;
-    while(tP -> siguiente != NULL){
-        tP = tP -> siguiente;
-    }
+    while(tP -> siguiente != NULL){//si la siguiente no es nula, es decir no es la pos final
+        tP = tP -> siguiente;//busco la pos  siguiente
+    }//
     return tP;
 }
