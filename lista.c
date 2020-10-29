@@ -90,6 +90,6 @@ tPosicion l_fin(tLista l){
     tPosicion tP = l;
     while(tP -> siguiente != NULL){//si la siguiente no es nula, es decir no es la pos final
         tP = tP -> siguiente;//busco la pos  siguiente
-    }
+    }//
     return tP;
 }
