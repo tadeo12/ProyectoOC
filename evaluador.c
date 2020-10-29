@@ -38,8 +38,6 @@ void fEliminarInt(void * a){
 
 void leerPalabras(FILE * archivo, tMapeo m){
     int *cantidad;
-    char caracter;
-    int contador=0;
     int * aux;
     char*palabra=malloc(30*sizeof(char));
     while(!feof(archivo)){
