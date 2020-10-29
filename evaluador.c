@@ -57,12 +57,9 @@ void leerPalabras(FILE * archivo, tMapeo m){
 
 
 int main(int argc, char *argv[]){
-    /*
     if(argc!=2)
         return ERROR_INVOCACION_PROGRAMA;
     char *ruta_archivo= argv[1];
-    */
-    char * ruta_archivo = "test.txt";
 
     FILE *archivo=fopen(ruta_archivo,"r");
     if(archivo==NULL){
