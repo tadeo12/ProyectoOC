@@ -9,20 +9,6 @@
 #define ERROR_INVOCACION_PROGRAMA     -2
 
 int fCompararPalabras(void * a, void * b){
-<<<<<<< HEAD
-    char* A = *( (char**) a);
-    char* B = *( (char**) b);
-    //printf("%s %s \n", A,  B);
-    return strcmp(A,B);
-}
-
-int fHashPalabras(void * a)
-{
-
-    //printf("hi\n");
-    char* str = *((char**) a);
-    printf("str: %c\n",*(str));
-=======
     char* A = ( (char*) a);
     char* B = ( (char*) b);
     return strcmp(A,B);
@@ -30,19 +16,14 @@ int fHashPalabras(void * a)
 
 int fHashPalabras(void * a){
     char* str = ((char*) a);
->>>>>>> 144054b677a61bd1fa526f4761e949073989cffc
-    int hash = 5381;
-    int c;
+    int c, hash =5381;
 
     while (*str){
         str++;
         c = *str;
-        hash = ((hash << 5) + hash) + c;
+        hash = ((hash << 5) + hash) + c;    //hash * 33 + el caracter
     }
-<<<<<<< HEAD
-    printf("hash devuelve %i\n", hash);
-=======
->>>>>>> 144054b677a61bd1fa526f4761e949073989cffc
+    hash = hash < 0 ? -hash : hash;         //Si llega a ser negativo
     return hash;
 }
 
@@ -53,123 +34,16 @@ void fEliminarPalabra(void * a){
 
 void fEliminarInt(void * a){
     free(a);
-<<<<<<< HEAD
-}
-
-int esLetra(char c){
-    return (c>64 && c<91) || (c>96 && c<123);
 }
 
 void leerPalabras(FILE * archivo, tMapeo m){
-
-    //int aux, * ant;
-   /* while(fscanf(archivo, " %29s", palabra) == 1){
-        //aux = *m_recuperar(m, palabra);
-        printf("%s\n", palabra);
-        aux = 1;
-        m_insertar(m, &palabra, &aux);
-
-        if(*ant)
-            *ant += 1;
-        else{
-            aux = 1;
-            *ant = aux;
-            m_insertar(m, palabra, aux);
-        }
-    }*/
-=======
-}
-
-void leerPalabras(FILE * archivo, tMapeo m){
->>>>>>> 144054b677a61bd1fa526f4761e949073989cffc
     int *cantidad;
-    char caracter;
-    int contador=0;
     int * aux;
-<<<<<<< HEAD
-    //const char s[2] = " ";
-    //char linea[1024];
-    //char**palabra=malloc(30*sizeof(char));
-    char**palabra=malloc(sizeof(char *));
-    *palabra=malloc(30*sizeof(char));
-    while(!feof(archivo)){
-        //palabra=malloc(30*sizeof(char));
-        fscanf(archivo, "%30s[^\n] ", *palabra);
-       //if(!feof(archivo))
-            fgetc(archivo);
-        // if(contador<30){
-
-           /* caracter=linea[contador];
-            printf("caracter %c \n", caracter);
-            if(caracter!=' '){
-                printf("caracter(!= espacio) %c \n", caracter);
-                *((*palabra)+contador)=caracter;
-                printf("palabra antes de else: %s\n", *palabra);
-            }
-            else{*/
-                //if(contador>0){//terminamos de leer una palabra
-                //contador=0;
-
-                printf("PALABRA ANTES DE INGRESAR: %s\n", *palabra);
-                printf("primer caracter de la palabra: %d\n",  **palabra);
-                printf("segundo caracter de la palabra: %d\n", *((*palabra)+1));
-                aux=(int *)m_recuperar(m, palabra);
-                //printf("volvi del recuperar \n");
-                cantidad=malloc(sizeof(int));
-                if(aux==NULL)
-                    (*cantidad)=1;
-                else
-                    (*cantidad)=(*aux) +1;
-                m_insertar(m,palabra,cantidad);
-                printf("palabra insertada %s\n", *palabra);
-                palabra=malloc(sizeof(char *)); //reservo espacio para nueva palabra
-                *palabra=malloc(30*sizeof(char)); //reservo espacio para nueva palabra
-                //if(palabra==NULL)
-                    //printf("NULL PALABRA \n");
-                printf("\n");
-            }
-        //contador++;
-        }
-
-
-int main(int argc, char *argv[]){
-    /*
-    if(argc!=2)
-        return ERROR_INVOCACION_PROGRAMA;
-    char *ruta_archivo= argv[1];
-    */
-    /*char ** pal=malloc(30 * sizeof(char));
-    **pal=' ';
-    fHashPalabras(pal);*/
-/*
-    char ** palabra=malloc(sizeof(char)*30);
-    printf("Ingrese la palabra a buscar \n");
-    scanf("%s", *palabra);
-    tMapeo mapeo;
-    crear_mapeo(&mapeo,20,&fHashPalabras,&fCompararPalabras);
-    m_recuperar(mapeo,palabra);
-    m_recuperar(mapeo,palabra);
-    m_recuperar(mapeo,palabra);
-    m_recuperar(mapeo,palabra);
-    m_recuperar(mapeo,palabra);
-    m_recuperar(mapeo,palabra);
-    printf("Ingrese la palabra a buscar \n");
-    scanf("%s", *palabra);
-    m_recuperar(mapeo,palabra);
-    m_recuperar(mapeo,palabra);
-    m_recuperar(mapeo,palabra);
-    m_recuperar(mapeo,palabra);
-    m_recuperar(mapeo,palabra);
-    m_recuperar(mapeo,palabra);
-*/
-
-    char * ruta_archivo = "test.txt";
-=======
     char*palabra=malloc(30*sizeof(char));
     while(!feof(archivo)){
         fscanf(archivo, "%30s[^\n] ", palabra);
         if(!feof(archivo))
-            fgetc(archivo); //consume espacios
+            fgetc(archivo);                      //consume espacios
         cantidad=malloc(sizeof(int));
         aux=(int *)m_recuperar(m, palabra);
         if(aux!=NULL)
@@ -177,82 +51,47 @@ int main(int argc, char *argv[]){
         else
             (*cantidad)=1;
         m_insertar(m,palabra,cantidad);
-        palabra=malloc(30*sizeof(char)); //reservo espacio para nueva palabra
+        palabra = malloc(30*sizeof(char));      //reservo espacio para nueva palabra
     }
 }
 
 
 int main(int argc, char *argv[]){
-    if(argc!=2)
+    tMapeo mapeo;
+    int * aux;
+    int opcion;
+    char * ruta_archivo, * palabra;
+    FILE * archivo;
+    if(argc!=2){
+        printf("ERROR: Cantidad de argumentos");
         return ERROR_INVOCACION_PROGRAMA;
-    char *ruta_archivo= argv[1];
->>>>>>> 144054b677a61bd1fa526f4761e949073989cffc
-
-    FILE *archivo=fopen(ruta_archivo,"r");
+    }
+    ruta_archivo = argv[1];
+    palabra = malloc(sizeof(char)*30);
+    archivo=fopen(ruta_archivo,"r");
     if(archivo==NULL){
-        printf("error, no se pudo leer el archivo");
+        printf("ERROR: Archivo no encontrado");
         return ERROR_APERTURA_ARCHIVO;
     }
-    tMapeo mapeo;
     crear_mapeo(&mapeo,20,&fHashPalabras,&fCompararPalabras);
     leerPalabras(archivo,mapeo);
     printf("Archivo leido\n");
     printf("Menu de operaciones \n");
-    printf("consultar cantidad de apariciones(1) o salir(2) ?\n");
-    int i;
-    scanf("%d",&i);
-    char * palabra=malloc(sizeof(char)*30);
-<<<<<<< HEAD
-    //*palabra=malloc(sizeof(char)*30);
-    int * aux;
-    /*printf("Ingrese la palabra a buscar \n");
-    scanf("%s", *palabra);
-    int * v= 3;
-    m_insertar(mapeo,palabra, &v);*/
-    while(i == 1){
+    printf("Consultar cantidad de apariciones(1) o salir(2) ?\n");
+    scanf("%d",&opcion);
+    while(opcion == 1){
         printf("Ingrese la palabra a buscar \n");
-        //fgets(palabra, 30, stdin);
 
-
-        scanf("%s", palabra);
-
-        /*printf("palabra a buscar: %s\n", *palabra);
-        printf("primer caracter de la palabra: %d\n",  **palabra);
-        printf("segundo caracter de la palabra: %d\n", *((*palabra)+1));
-        printf("tercer caracter de la palabra: %d\n",  *((*palabra)+2));
-        printf("cuarto caracter de la palabra: %d\n",  *((*palabra)+3));
-        printf("quinto caracter de la palabra: %d\n",  *((*palabra)+4));
-        */
-        aux=(int *)m_recuperar(mapeo,&palabra);
-
-        if ( aux==NULL ){
-            printf("entre otro if \n");
-            printf("la palabra %s no aparece en el archivo \n",palabra);
-        }
-        else{
-           // printf("entre y direccion memoria %i \n",aux);
-            printf("entre else \n");
-            //int nulo = ((*aux) != NULL);
-            //printf("ES NULO AUX? %i\n",nulo);
-            printf("la palabra %s aparece  veces en %i el archivo \n",palabra,*aux);
-
-        }
-
-=======
-    int * aux;
-    while(i == 1){
-        printf("Ingrese la palabra a buscar \n");
         scanf("%s", palabra);
         aux=(int *)m_recuperar(mapeo,palabra);
-        if (aux==NULL )
-            printf("la palabra %s no aparece en el archivo \n",palabra);
-        else
+        if (aux)
             printf("la palabra %s aparece %d veces en el archivo \n",palabra,*aux);
->>>>>>> 144054b677a61bd1fa526f4761e949073989cffc
+        else
+            printf("la palabra %s no aparece en el archivo \n",palabra);
         printf("consultar cantidad de apariciones(1) o salir(2) ?\n");
-        scanf("%d",&i);
+        scanf("%d",&opcion);
     }
+    free(palabra);                                              //Libero la palabra que la reservé al inicio
     m_destruir(&mapeo,&fEliminarPalabra,&fEliminarInt);
     return 0;
 }
-
