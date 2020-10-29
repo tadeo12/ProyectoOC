@@ -60,7 +60,7 @@ void leerPalabras(FILE * archivo, tMapeo m){
 int main(int argc, char *argv[]){
     tMapeo mapeo;
     int * aux;
-    int i;
+    int opcion;
     char * ruta_archivo, * palabra;
     FILE * archivo;
     if(argc!=2){
@@ -79,8 +79,8 @@ int main(int argc, char *argv[]){
     printf("Archivo leido\n");
     printf("Menu de operaciones \n");
     printf("Consultar cantidad de apariciones(1) o salir(2) ?\n");
-    scanf("%d",&i);
-    while(i == 1){
+    scanf("%d",&opcion);
+    while(opcion == 1){
         printf("Ingrese la palabra a buscar \n");
 
         scanf("%s", palabra);
@@ -90,7 +90,7 @@ int main(int argc, char *argv[]){
         else
             printf("la palabra %s no aparece en el archivo \n",palabra);
         printf("consultar cantidad de apariciones(1) o salir(2) ?\n");
-        scanf("%d",&i);
+        scanf("%d",&opcion);
     }
     free(palabra);                                              //Libero la palabra que la reservé al inicio
     m_destruir(&mapeo,&fEliminarPalabra,&fEliminarInt);
