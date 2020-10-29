@@ -151,8 +151,5 @@ tValor m_recuperar(tMapeo m, tClave c){
         if(i < largo - 1)
             p = l_siguiente(bucket, p);
     }
-    if(aRetornar!=NULL){
-        int* n = (int*) aRetornar;
-    }
     return aRetornar;
 }
