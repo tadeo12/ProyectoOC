@@ -83,7 +83,7 @@ int main(int argc, char *argv[]){
         printf("Ingrese la palabra a buscar \n");
 
         scanf("%s", palabra);
-        aux=(int *)m_recuperar(mapeo,palabra);
+        aux=(int *)m_recuperar(mapeo,palabra);                  //Recupero la cantidad de apariciones, NULL si no está
         if (aux)
             printf("la palabra %s aparece %d veces en el archivo \n",palabra,*aux);
         else
