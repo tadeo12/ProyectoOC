@@ -71,7 +71,6 @@ tValor m_insertar(tMapeo m, tClave c, tValor v){
         redimensionar(m -> longitud_tabla * 2,m);       //Duplico el tamaño del mapeo
     }
     int claveHash = ( m -> hash_code(c) ) % ( m -> longitud_tabla );
-    int encontre = 0;
     tLista lista = *(m -> tabla_hash + claveHash);
     largo = l_longitud(lista);
     tPosicion actual = l_primera(lista);
