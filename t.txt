@@ -1,2 +1,8 @@
+<<<<<<< HEAD
+a b c d e f g h i j k l m n o p f q r s t f f u v w     x y z1
+hola ff hola hola gg
+gg gg 
+=======
 a b c d e f g h i j  hola k l m n o p q r s t u v w x y z
 hola
+>>>>>>> 144054b677a61bd1fa526f4761e949073989cffc

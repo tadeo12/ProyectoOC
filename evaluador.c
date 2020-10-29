@@ -16,8 +16,7 @@ int fCompararPalabras(void * a, void * b){
 
 int fHashPalabras(void * a){
     char* str = ((char*) a);
-    int hash = 5381;                        //Numero primo base
-    int c;
+    int c, hash =5381;
 
     while (*str){
         str++;
