@@ -93,7 +93,6 @@ tValor m_insertar(tMapeo m, tClave c, tValor v){
         entrada -> clave = c;
         entrada -> valor = v;
         l_insertar(*(m -> tabla_hash + claveHash), l_fin(*(m -> tabla_hash + claveHash)) , entrada);
-
         (m) -> cantidad_elementos++;
     }
     return toReturn;
@@ -136,7 +135,6 @@ void m_destruir(tMapeo * m, void (*fEliminarC)(void *), void (*fEliminarV)(void 
 }
 
 tValor m_recuperar(tMapeo m, tClave c){
-
     int claveHash = m -> hash_code(c) % m -> longitud_tabla;
     tLista bucket = *((m -> tabla_hash) + claveHash);
     tPosicion p = l_primera(bucket);
