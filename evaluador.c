@@ -4,7 +4,7 @@
 #include "lista.h"
 #include "mapeo.h"
 
-// Macros con cÛdigos de finalizaciÛn
+// Macros con c√≥digos de finalizaci√≥n
 #define ERROR_APERTURA_ARCHIVO        -1
 #define ERROR_INVOCACION_PROGRAMA     -2
 
@@ -43,7 +43,7 @@ void leerPalabras(FILE * archivo, tMapeo m){
     while(!feof(archivo)){
         fscanf(archivo, "%30s[^\n] ", palabra);
         if(!feof(archivo))
-            fgetc(archivo);                                 //consume espacios
+            fgetc(archivo);                                 //consume espacios entre palabras
         cantidad = malloc(sizeof(int));
         valorAnterior =(int *)m_recuperar(m, palabra);
         if(valorAnterior != NULL)
@@ -85,7 +85,7 @@ int main(int argc, char *argv[]){
     while(opcion == 1){
         printf("Ingrese la palabra a buscar \n");
         scanf("%s", palabra);
-        repeticiones = (int *)m_recuperar(mapeo,palabra);                  //Recupero la cantidad de apariciones, NULL si no est·
+        repeticiones = (int *)m_recuperar(mapeo,palabra);                  //Recupero la cantidad de apariciones, NULL si no est√°
         if (repeticiones)
             printf("la palabra %s aparece %d veces en el archivo \n",palabra, *repeticiones);
         else
@@ -93,8 +93,9 @@ int main(int argc, char *argv[]){
         printf("consultar cantidad de apariciones(1) o salir(2) ?\n");
         scanf("%d",&opcion);
     }
-    free(palabra);                                                          //Libero la palabra que la reservÈ al inicio
+    free(palabra);                                                          //Libero la palabra que la reserv√© al inicio
     m_destruir(&mapeo,&fEliminarPalabra,&fEliminarInt);
+    fclose(archivo);
     return 0;
 }
 
