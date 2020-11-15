@@ -9,18 +9,18 @@ void crear_lista(tLista * l){
         exit(LST_ERROR_MEMORIA);
     }
     (*l) -> elemento=NULL;
-    (*l) -> siguiente=NULL;     //se crea una lista vacia con solo el dummy
+    (*l) -> siguiente=NULL;                                     //se crea una lista vacia con solo el dummy
 }
 
 void l_insertar(tLista l, tPosicion p, tElemento e){
-    tPosicion aux = p -> siguiente;     //guardo la posicion donde voy a insertar
+    tPosicion posSiguiente = p -> siguiente;
     p -> siguiente = malloc(sizeof(struct celda));
     if(p -> siguiente == NULL){
         printf("ERROR: No se pudo reservar espacio en memoria.");
         exit(LST_ERROR_MEMORIA);
     }
-    p -> siguiente -> elemento = e;//asigno el elemento
-    p -> siguiente -> siguiente = aux;
+    p -> siguiente -> elemento = e;
+    p -> siguiente -> siguiente = posSiguiente;
 }
 
 void l_eliminar(tLista l, tPosicion p, void (*fEliminar)(tElemento)){
@@ -35,12 +35,12 @@ void l_eliminar(tLista l, tPosicion p, void (*fEliminar)(tElemento)){
 }
 
 void l_destruir(tLista * l, void (*fEliminar)(tElemento)){
-    if(*l != NULL){                                     // si el primer elemento de la lista no es nulo
-        l_destruir(&((*l) -> siguiente), fEliminar);    //destruyo el siguiente
+    if(*l != NULL){                                     // si no llegue al final
+        l_destruir(&((*l) -> siguiente), fEliminar);    //recorro recursivamente
         if((*l) -> elemento != NULL)
-            fEliminar((*l) -> elemento);                //Elimino elemento
+            fEliminar((*l) -> elemento);
         free(*l);
-        *l = NULL;                                      //desreferencio el puntero
+        *l = NULL;
     }
 }
 
@@ -49,7 +49,7 @@ tElemento l_recuperar(tLista l, tPosicion p){
         printf("ERROR: Posicion invalida.");
         exit(LST_POSICION_INVALIDA);
     }
-    return p -> siguiente-> elemento;                   //retorna el elemento
+    return p -> siguiente-> elemento;          //como se usan posiciones indirectas, retorno el elemento de la siguiente
 }
 
 tPosicion l_primera(tLista l){
@@ -59,10 +59,10 @@ tPosicion l_primera(tLista l){
 tPosicion l_ultima(tLista l){
     tPosicion celdaActual = l;
     if(celdaActual -> siguiente != NULL)
-        while(celdaActual -> siguiente -> siguiente != NULL){           //me fijo si el siguiente de la pos actual es nulo para saber
-                                                                        //si llegue al final de la lista
+        while(celdaActual -> siguiente -> siguiente != NULL){
+            //me fijo si el siguiente de la pos actual (indirecta) es nulo para saber si llegue a la ultima de la lista
             celdaActual = celdaActual -> siguiente;
-        }                                                               //recupero la ultima posicion
+        }
     return celdaActual;
 }
 
