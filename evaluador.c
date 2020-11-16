@@ -46,11 +46,12 @@ void leerPalabras(FILE * archivo, tMapeo m){
             fgetc(archivo);                                 //consume espacios entre palabras
         cantidad = malloc(sizeof(int));
         valorAnterior =(int *)m_recuperar(m, palabra);
-        if(valorAnterior != NULL)
+        if(valorAnterior != NULL){
             (*cantidad) = (*valorAnterior) + 1;
+            free(valorAnterior);                            //libero el espacio ocupado por la cantidad anterior
+        }
         else{
             (*cantidad) = 1;
-            free(valorAnterior);                            //libero el espacio ocupado por la cantidad anterior
         }
         m_insertar(m,palabra,cantidad);
         palabra = malloc(30 * sizeof(char));                //reservo espacio para nueva palabra
